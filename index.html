@@ -2,438 +2,516 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CLUSTER 2026 - NDT Civil Community Registration Portal</title>
-  <!-- Google Fonts & Tailwind CSS CDN -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CLUSTER 2026 - NDT Civil Community Registration</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-            display: ['Space Grotesk', 'sans-serif'],
-          },
-          colors: {
-            gold: {
-              300: '#FFE57F',
-              400: '#FFD700',
-              500: '#D4AF37',
-              600: '#B8860B',
-              700: '#8B6508',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --black: #0b0b0d;
+      --panel: #121215;
+      --panel2: #1e1e23;
+      --line: #34343b;
+      --gold: #ffd100;
+      --gold2: #d4af37;
+      --gold-d: #b8860b;
+      --text: #f3f3f0;
+      --muted: #a9a9b0;
+      --ok: #5cd68a;
+      --err: #ff6b5e;
+      --font-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+      --font-body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
     body {
-      background-color: #050507;
-      color: #f3f4f6;
-      min-height: 100vh;
-      font-family: 'Outfit', sans-serif;
-      position: relative;
-      overflow-x: hidden;
+      font-family: var(--font-body); color: var(--text); min-height: 100vh; line-height: 1.5;
+      background-color: #050506;
+      background-image:
+        linear-gradient(rgba(212,175,55,.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.09) 1px, transparent 1px),
+        linear-gradient(rgba(212,175,55,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.035) 1px, transparent 1px);
+      background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    }
+    .hazard { height: 8px; background: var(--gold); }
+
+    .nav { background: var(--black); border-bottom: 1px solid var(--line); }
+    .topbar { max-width: 1120px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 46px; height: 46px; object-fit: contain; }
+    .brand b { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: .02em; line-height: 1; color: #fff; }
+    .brand span { font-size: 12px; color: var(--muted); }
+    .topbar .sheet-ref { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.3; border-left: 3px solid var(--gold); padding-left: 12px; }
+
+    .layout { max-width: 1120px; margin: 0 auto; padding: 26px 20px 36px; display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+    @media (min-width: 940px) {
+      .layout { grid-template-columns: 1.05fr 0.95fr; gap: 36px; padding-top: 34px; }
+      .left { position: sticky; top: 20px; }
     }
 
-    .bg-civil-blueprint {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' viewBox='0 0 800 1000'%3E%3Cg stroke='%23d4af37' stroke-width='0.75' fill='none' opacity='0.15'%3E%3Cpath d='M20 50h400M20 120h400M20 190h400M20 260h400M20 330h400M20 400h400' stroke-dasharray='4,4'/%3E%3Cpath d='M50 20v450M120 20v450M190 20v450M260 20v450M330 20v450' stroke-dasharray='4,4'/%3E%3Cpath d='M50 450 L350 50 M50 50 L350 450' stroke-width='0.5'/%3E%3Cpath d='M80 220 Q80 140 180 140 Q280 140 280 220 L300 230 C300 240 280 245 180 245 C80 245 60 240 60 230 Z' stroke-width='1.5'/%3E%3Cpath d='M80 220 C100 220 120 150 180 150 C240 150 260 220 280 220' stroke-width='1'/%3E%3Cpath d='M130 360 Q130 270 240 270 Q350 270 350 360 L370 375 C370 385 340 390 240 390 C140 390 110 385 110 375 Z' stroke-width='1.5'/%3E%3Cpath d='M130 360 C150 360 170 280 240 280 C310 280 330 360 350 360' stroke-width='1'/%3E%3Cpath d='M220 500 L220 950 M420 500 L420 950 M220 520 L420 520 M220 620 L420 620 M220 720 L420 720 M220 820 L420 820 M220 920 L420 920' stroke-width='1.2'/%3E%3Cpath d='M220 520 L420 620 M220 620 L420 520 M220 620 L420 720 M220 720 L420 620 M220 720 L420 820 M220 820 L420 720 M220 820 L420 920 M220 920 L420 820' stroke-width='0.8'/%3E%3C/g%3E%3C/svg%3E");
-      background-position: left top;
-      background-repeat: repeat-y;
-      background-size: contain;
+    /* ---------- Gold event board ---------- */
+    .board { position: relative; background: var(--gold); color: var(--black); border-radius: 10px; padding: 26px 24px 22px; border-bottom: 6px solid var(--gold-d); }
+    .board-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .badge { display: inline-block; background: var(--black); color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .12em; padding: 6px 16px; border-radius: 20px; }
+    .board-head img {
+      width: 92px; height: 92px; object-fit: contain; flex: none;
+      background: #fff; border-radius: 50%; padding: 10px;
+      border: 4px solid var(--black);
+      box-shadow: 0 5px 0 var(--gold-d);
+    }
+    
+    .title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(64px, 13vw, 122px); line-height: .88; letter-spacing: .01em; margin: 18px 0 6px; }
+    .title .yr { display: block; color: transparent; -webkit-text-stroke: 2px var(--black); }
+    .tag { font-weight: 700; font-size: 14px; letter-spacing: .04em; }
+
+    .dim { display: flex; align-items: center; gap: 10px; margin: 14px 0 18px; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .dim i { flex: 1; height: 2px; background: var(--black); position: relative; }
+    .dim i::before, .dim i::after { content: ""; position: absolute; top: -6px; width: 3px; height: 14px; background: var(--black); }
+    .dim i::before { left: 0; } .dim i::after { right: 0; }
+
+    .specs { width: 100%; border-collapse: collapse; background: var(--black); color: var(--text); border-radius: 8px; overflow: hidden; }
+    .specs th, .specs td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); font-size: 14px; vertical-align: middle; }
+    .specs tr:last-child th, .specs tr:last-child td { border-bottom: 0; }
+    .specs th { width: 34%; font-weight: 700; color: var(--gold); }
+    .specs td { font-weight: 600; }
+    .specs a { color: var(--gold); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .specs a:hover { color: #fff; }
+    .specs a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .fee { font-family: var(--font-display); font-size: 32px; font-weight: 800; line-height: 1; color: var(--gold); }
+    .fee small { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 6px; }
+
+    /* ---------- Countdown ---------- */
+    .clock { margin-top: 18px; background: var(--panel); border: 1px solid var(--gold2); border-radius: 10px; padding: 16px 18px 18px; }
+    .clock h2 { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+    .cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .cell { background: var(--panel2); border-radius: 6px; padding: 8px 4px 6px; text-align: center; }
+    .cell b { display: block; font-family: var(--font-display); font-size: clamp(34px, 8vw, 46px); font-weight: 800; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+    .cell:last-child b { color: var(--gold); }
+    .cell span { font-size: 11px; color: var(--muted); }
+    .progress { margin-top: 14px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .bar { height: 10px; background: var(--panel2); border-radius: 5px; overflow: hidden; }
+    .bar div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-d), var(--gold)); border-radius: 5px; transition: width .8s ease; }
+
+    /* ---------- Form sheet ---------- */
+    .sheet { background: var(--panel); border: 1px solid var(--gold2); border-top: 8px solid var(--gold); border-radius: 10px; padding: 26px 24px 24px; box-shadow: 0 20px 40px -20px rgba(0,0,0,.9), 0 0 40px -20px rgba(255,209,0,.35); }
+    .sheet h2 { font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1; margin-bottom: 4px; color: #fff; }
+    .sheet .lede { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    form { display: grid; gap: 16px; }
+    .field label.lbl, .field .lbl { display: flex; align-items: baseline; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 5px; color: var(--gold); }
+    .field label.lbl em { font-style: normal; font-weight: 500; font-size: 12px; color: var(--muted); }
+    .field input[type="text"], .field input[type="email"], .field input[type="tel"] {
+      width: 100%; font: inherit; font-size: 16px; padding: 12px 13px; color: #fff; background: var(--panel2);
+      border: 2px solid var(--line); border-radius: 6px; transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .field input::placeholder { color: #75757e; }
+    .field input:hover { border-color: #55555e; }
+    .field input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,209,0,.22); }
+    .field input:-webkit-autofill { -webkit-text-fill-color: #fff; -webkit-box-shadow: 0 0 0 40px var(--panel2) inset; }
+
+    .drop { display: flex; align-items: center; gap: 14px; padding: 14px; border: 2px dashed var(--gold2); border-radius: 6px; background: var(--panel2); cursor: pointer; transition: border-color .15s, background-color .15s; }
+    .drop:hover, .drop.drag { border-color: var(--gold); background: #26261c; }
+    .drop svg { width: 34px; height: 34px; flex: none; color: var(--gold); }
+    .drop .t1 { font-size: 14px; font-weight: 600; color: #fff; word-break: break-word; }
+    .drop .t2 { font-size: 12px; color: var(--muted); }
+    .drop.has-file { border-style: solid; border-color: var(--ok); background: #14241b; }
+    .drop.has-file .t1 { color: var(--ok); }
+    #slip:focus-visible + .drop { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+      font-family: var(--font-display); font-weight: 800; font-size: 24px; letter-spacing: .03em;
+      color: var(--black); background: var(--gold); border: 0; border-radius: 6px; padding: 13px 18px; cursor: pointer;
+      box-shadow: 0 5px 0 var(--gold-d), 0 12px 22px -8px rgba(255,209,0,.45);
+      transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+    }
+    .btn:hover { background: #ffe14d; }
+    .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--gold-d); }
+    .btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .btn:disabled { cursor: wait; background: #6b6b72; color: #cfcfd4; box-shadow: none; transform: translateY(3px); }
+    .spinner { width: 18px; height: 18px; border: 3px solid var(--black); border-top-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .foot { text-align: center; font-size: 12px; color: var(--muted); padding: 4px 20px 6px; }
+    .tagline { text-align: center; font-weight: 700; font-size: 13px; letter-spacing: .3em; color: var(--gold); padding: 0 20px 26px; }
+
+    /* ---------- Entry pass modal ---------- */
+    .overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.88); display: none; align-items: flex-start; justify-content: center; padding: 20px 16px; overflow-y: auto; }
+    .overlay.open { display: flex; }
+    .pass { width: 100%; max-width: 340px; margin: auto; background: var(--panel); border: 1px solid var(--gold2); border-radius: 12px; overflow: hidden; transform: translateY(24px) rotate(-1.5deg); opacity: 0; transition: transform .35s cubic-bezier(.2,1.1,.4,1), opacity .25s ease; }
+    .pass.show { transform: none; opacity: 1; }
+    .pass-top { background: var(--gold); color: var(--black); text-align: center; padding: 14px 18px 18px; }
+    .pass-top .slot { width: 60px; height: 10px; background: var(--black); opacity: .3; border-radius: 10px; margin: 0 auto 12px; }
+    .pass-top small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .pass-top h3 { font-family: var(--font-display); font-size: 40px; font-weight: 900; line-height: .95; margin-top: 4px; }
+    .pass-body { padding: 16px 18px 4px; text-align: center; }
+    .ok-line { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--ok); margin-bottom: 12px; }
+    .qr { display: inline-block; background: #fff; padding: 8px; border: 3px solid var(--gold); border-radius: 8px; }
+    .qr img { display: block; width: 156px; height: 156px; }
+    #mTicketId { display: block; margin: 10px 0 12px; font-family: 'Courier New', monospace; font-weight: 700; font-size: 17px; letter-spacing: .08em; color: var(--gold); }
+    .rows { border-top: 2px dashed var(--gold2); text-align: left; }
+    .rows div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .rows span:first-child { color: var(--gold); font-weight: 700; }
+    .rows span:last-child { font-weight: 600; text-align: right; color: #fff; }
+    .rows .st { color: var(--ok); }
+    .pass-note { font-size: 12px; color: var(--muted); padding: 10px 18px 14px; text-align: center; }
+    .pass .btn { border-radius: 0; box-shadow: none; font-size: 22px; }
+    .pass .btn:active { transform: none; }
+
+    /* ---------- Error toast ---------- */
+    .toast { position: fixed; left: 50%; bottom: 20px; z-index: 60; width: calc(100% - 32px); max-width: 420px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; display: flex; gap: 12px; align-items: flex-start; background: var(--panel2); border: 1px solid var(--line); border-left: 8px solid var(--err); border-radius: 6px; padding: 12px 14px; box-shadow: 0 14px 30px rgba(0,0,0,.6); transition: transform .25s ease, opacity .25s ease; }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+    .toast b { display: block; font-size: 14px; color: #fff; }
+    .toast p { font-size: 13px; color: var(--muted); }
+    .toast button { margin-left: auto; background: none; border: 0; font-size: 18px; line-height: 1; cursor: pointer; color: #fff; padding: 2px 4px; }
+    .toast button:focus-visible { outline: 3px solid var(--gold); }
+
+    @media (max-width: 480px) {
+      .board { padding: 22px 16px 18px; }
+      .specs th { width: 36%; }
+      .sheet { padding: 22px 16px 20px; }
+      .topbar .sheet-ref { display: none; }
     }
 
-    .golden-wave {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle at top right, rgba(255, 215, 0, 0.85) 0%, rgba(184, 134, 11, 0.6) 45%, transparent 75%);
-      border-bottom-left-radius: 100%;
-      filter: blur(20px);
-      z-index: 0;
-      pointer-events: none;
+    /* ===== Black board with gold shine ===== */
+    .board {
+      background-color: #0b0b0d;
+      background-image:
+        linear-gradient(rgba(212,175,55,.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.10) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text);
+      border: 1px solid var(--gold2);
+      border-top: 8px solid var(--gold);
+      border-bottom: 1px solid var(--gold2);
+      box-shadow: 0 24px 50px -24px rgba(0,0,0,.9), 0 0 50px -22px rgba(255,209,0,.4);
     }
+    .badge { background: var(--gold); color: var(--black); }
+    .board-head img {
+      background: transparent; border: 0; border-radius: 0; box-shadow: none; filter: none;
+      padding: 0; width: 88px; height: 88px; object-fit: contain;
+    }
+    .title .gold {
+      display: block;
+      background: linear-gradient(110deg, #8a6508 0%, #ffd100 16%, #fff4b0 30%, #ffd100 42%, #b8860b 58%, #ffd100 74%, #8a6508 100%);
+      background-size: 240% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      filter: drop-shadow(0 4px 14px rgba(255,209,0,.28));
+      animation: shine 7s ease-in-out infinite alternate;
+    }
+    @keyframes shine { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+    .title .yr { -webkit-text-stroke: 2px var(--gold); color: transparent; }
+    .tag { color: #d9d9dd; font-weight: 600; }
+    .dim { color: var(--gold); }
+    .dim i, .dim i::before, .dim i::after { background: var(--gold); }
+    .specs { background: #16161a; border: 1px solid var(--line); }
 
-    .golden-wave-shape {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 220px;
-      height: 220px;
-      background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-      border-bottom-left-radius: 100%;
-      z-index: 1;
-      pointer-events: none;
-      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+    /* ===== Mobile and tablet ===== */
+    body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .btn { min-height: 54px; }
+    .drop { min-height: 64px; }
+    @media (max-width: 939px) {
+      .layout { max-width: 680px; }
     }
+    @media (max-width: 600px) {
+      .layout { padding: 16px 14px 28px; gap: 18px; }
+      .topbar { padding: 10px 14px; }
+      .brand img { width: 40px; height: 40px; }
+      .brand b { font-size: 19px; }
+      .brand span { font-size: 11px; }
+      .board { padding: 18px 16px 16px; border-radius: 10px; }
+      .board-head { gap: 10px; }
+      .badge { font-size: 11px; padding: 6px 12px; letter-spacing: .08em; }
+      .board-head img { width: 70px; height: 70px; padding: 0; }
+      .title { font-size: clamp(60px, 21vw, 120px); margin-top: 14px; }
+      .title .yr { -webkit-text-stroke-width: 1.5px; }
+      .tag { font-size: 13px; }
+      .dim { font-size: 11px; gap: 8px; margin: 12px 0 14px; }
+      .specs th, .specs td { padding: 10px 12px; font-size: 13px; }
+      .fee { font-size: 28px; }
+      .clock { padding: 14px; }
+      .cells { gap: 6px; }
+      .sheet { padding: 20px 16px 18px; border-radius: 10px; }
+      .sheet h2 { font-size: 32px; }
+      .sheet .lede { font-size: 13px; margin-bottom: 16px; }
+      .field label.lbl { flex-direction: column; align-items: flex-start; gap: 1px; }
+      .overlay { padding: 14px 12px; }
+      .pass { max-width: 360px; }
+      .tagline { letter-spacing: .18em; font-size: 12px; }
+    }
+    @media (max-width: 400px) {
+      .specs th, .specs td { display: block; width: 100%; }
+      .specs th { padding-bottom: 0; border-bottom: 0; background: transparent; font-size: 12px; }
+      .specs td { padding-top: 2px; }
+      .badge { letter-spacing: .04em; }
+    }
+    @media (max-width: 340px) {
+      .board-head img { display: none; }
+      .cell b { font-size: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .title .gold { animation: none; } }
 
-    .glass-card {
-      background: rgba(18, 18, 22, 0.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 215, 0, 0.28);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.12);
+    /* ===== Civil engineering photo background ===== */
+    :root {
+      --photo: url("https://lh3.googleusercontent.com/d/1QjTDEmXTtjwZizm68hzgycT4kmi98GVy");
+      --dim-top: .55;   /* photo darkness at the top: 0 = clear, 1 = black */
+      --dim-bottom: .90; /* photo darkness at the bottom */
     }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-color: #050506;
+      background-image:
+        linear-gradient(rgba(212,175,55,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.07) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% 0%, rgba(255,209,0,.14), transparent 55%),
+        linear-gradient(180deg, rgba(5,5,6,var(--dim-top)) 0%, rgba(5,5,6,.78) 55%, rgba(5,5,6,var(--dim-bottom)) 100%),
+        var(--photo);
+      background-size: 120px 120px, 120px 120px, 100% 100%, 100% 100%, cover;
+      background-position: 0 0, 0 0, center, center, center top;
+      background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+    }
+    .nav { background: rgba(11,11,13,.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .clock { background: rgba(18,18,21,.92); }
 
-    .glass-input {
-      background: rgba(26, 26, 32, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      transition: all 0.3s ease;
+    /* Phone tuning for the photo */
+    body::before { height: 100vh; height: 100lvh; transform: translateZ(0); }
+    @media (max-width: 700px) {
+      :root { --dim-top: .45; --dim-bottom: .85; }
+      body::before { background-position: 0 0, 0 0, center, center, 50% 20%; }
     }
+    @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
-    .glass-input:focus {
-      border-color: #FFD700;
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
-      outline: none;
-    }
-
-    .gold-gradient-text {
-      background: linear-gradient(135deg, #FFF5C0 0%, #FFD700 50%, #B8860B 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
-      color: #0a0a0c;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-    }
-
-    .btn-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
-      background: linear-gradient(135deg, #FFE57F 0%, #FFD700 50%, #D4AF37 100%);
-    }
-
-    .btn-gold:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .logo-glow {
-      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.35));
-    }
   </style>
 </head>
-<body class="bg-civil-blueprint flex flex-col items-center justify-between min-h-screen py-6 px-4 relative">
+<body>
 
-  <div class="golden-wave"></div>
-  <div class="golden-wave-shape"></div>
-
-  <header class="w-full max-w-lg flex items-center justify-between mb-6 px-2 relative z-20">
-    <div class="flex items-center gap-3">
-      <img 
-        src="https://lh3.googleusercontent.com/d/1UvR4bDe4RdnEb49cvVtBE3DHg0k4nb5Y" 
-        alt="NDT Logo" 
-        class="w-12 h-12 sm:w-14 sm:h-14 object-contain logo-glow rounded-full bg-black/40 p-1 border border-gold-400/30"
-      >
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="nav"><div class="topbar">
+    <div class="brand">
+      <img src="https://lh3.googleusercontent.com/d/1UvR4bDe4RdnEb49cvVtBE3DHg0k4nb5Y" alt="NDT Civil Community logo">
       <div>
-        <span class="block text-xs sm:text-sm font-bold text-white tracking-wider uppercase">NDT Civil</span>
-        <span class="block text-[10px] text-gold-400 tracking-widest uppercase">Community</span>
+        <b>NDT Civil Community</b>
+        <span>Department of Civil Engineering</span>
       </div>
     </div>
+    <div class="sheet-ref">Registration<br>Annual get-together</div>
+  </div></div>
 
-    <div class="flex items-center gap-2">
-      <img 
-        src="https://lh3.googleusercontent.com/d/1xAfVKOlZf13Lu-lpNTWc4pwkXaQSccYc" 
-        alt="Cluster Logo" 
-        class="w-12 h-12 sm:w-14 sm:h-14 object-contain logo-glow"
-      >
-    </div>
-  </header>
+  <div class="layout">
 
-  <main class="w-full max-w-lg glass-card rounded-2xl p-6 sm:p-8 relative z-10 border border-gold-400/30 my-auto">
-    <header class="text-center mb-6">
-      <div class="flex justify-center mb-3">
-        <img 
-          src="https://lh3.googleusercontent.com/d/1xAfVKOlZf13Lu-lpNTWc4pwkXaQSccYc" 
-          alt="CLUSTER 2026 Logo" 
-          class="w-24 h-24 sm:w-28 sm:h-28 object-contain logo-glow transform hover:scale-105 transition duration-300"
-        >
+    <!-- LEFT: site signboard + countdown -->
+    <section class="left" aria-label="Event details">
+      <div class="board">
+                <div class="board-head">
+          <span class="badge">ENTRY PASS | ADMIT ONE</span>
+          <img src="https://lh3.googleusercontent.com/d/1xAfVKOlZf13Lu-lpNTWc4pwkXaQSccYc" alt="CLUSTER 2026 logo">
+        </div>
+
+        <h1 class="title"><span class="gold">Cluster</span><span class="yr">2026</span></h1>
+        <p class="tag">NDT Civil Community annual get-together</p>
+
+        <div class="dim" aria-hidden="true"><i></i><span>7 NOV 2026 / 6:00 PM</span><i></i></div>
+
+        <table class="specs">
+          <tr><th scope="row">Project</th><td>Annual get-together</td></tr>
+          <tr><th scope="row">Organizer</th><td>NDT Civil Community, ITUM</td></tr>
+          <tr><th scope="row">Date</th><td>7 November 2026, 6:00 PM</td></tr>
+          <tr>
+            <th scope="row">Site</th>
+            <td><a href="https://maps.app.goo.gl/ygAJsBfqNj6ZGX567" target="_blank" rel="noopener noreferrer">Open venue in Google Maps</a></td>
+          </tr>
+          <tr><th scope="row">Entry fee</th><td><span class="fee">LKR 5,000/=</span><small>per person</small></td></tr>
+        </table>
       </div>
-      <h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-wider gold-gradient-text uppercase">
-        CLUSTER 2026
-      </h1>
-      <p class="text-xs sm:text-sm font-semibold tracking-widest text-gray-300 mt-1 uppercase">
-        NDT Civil Community • Annual Get-Together
-      </p>
-    </header>
 
-    <section class="bg-black/50 border border-gold-400/30 rounded-xl p-4 mb-4 text-center backdrop-blur-md">
-      <div class="flex items-center justify-center gap-2 mb-2">
-        <span class="animate-pulse">⏳</span>
-        <h2 class="text-xs font-bold text-gold-400 uppercase tracking-widest">Event Countdown</h2>
-      </div>
-      <div class="grid grid-cols-4 gap-2 text-center">
-        <div class="bg-white/5 rounded-lg p-2 border border-white/5">
-          <span id="days" class="font-display text-xl sm:text-2xl font-bold text-white block">00</span>
-          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider">Days</span>
+      <div class="clock" role="timer" aria-label="Countdown to the event">
+        <h2>Time left until the event</h2>
+        <div class="cells">
+          <div class="cell"><b id="days">00</b><span>days</span></div>
+          <div class="cell"><b id="hours">00</b><span>hours</span></div>
+          <div class="cell"><b id="mins">00</b><span>minutes</span></div>
+          <div class="cell"><b id="secs">00</b><span>seconds</span></div>
         </div>
-        <div class="bg-white/5 rounded-lg p-2 border border-white/5">
-          <span id="hours" class="font-display text-xl sm:text-2xl font-bold text-white block">00</span>
-          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider">Hours</span>
-        </div>
-        <div class="bg-white/5 rounded-lg p-2 border border-white/5">
-          <span id="mins" class="font-display text-xl sm:text-2xl font-bold text-white block">00</span>
-          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider">Mins</span>
-        </div>
-        <div class="bg-white/5 rounded-lg p-2 border border-white/5">
-          <span id="secs" class="font-display text-xl sm:text-2xl font-bold text-gold-400 block">00</span>
-          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider">Secs</span>
+        <div class="progress">
+          <div class="progress-label"><span>Countdown progress</span><span id="progressPct">0%</span></div>
+          <div class="bar"><div id="progressBar"></div></div>
         </div>
       </div>
     </section>
 
-    <a 
-      href="https://maps.app.goo.gl/ygAJsBfqNj6ZGX567" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      class="mb-6 flex items-center justify-between p-3 rounded-xl bg-white/5 border border-gold-400/30 hover:border-gold-400 hover:bg-gold-400/10 transition duration-300 group"
-    >
-      <div class="flex items-center gap-3">
-        <div class="p-2 rounded-lg bg-gold-400/20 text-gold-400 border border-gold-400/40">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
+    <!-- RIGHT: registration form -->
+    <main class="sheet">
+      <h2>Reserve your place</h2>
+      <p class="lede">Fill in your details, attach the bank slip, and your entry pass appears right away. A copy is emailed to you.</p>
+
+      <form id="regForm" onsubmit="handleRegistration(event)">
+        <div class="field">
+          <label class="lbl" for="fullName">Full name</label>
+          <input type="text" id="fullName" required autocomplete="name" placeholder="e.g. Sahan Jayanindu">
         </div>
-        <div class="text-left">
-          <span class="block text-xs font-bold text-gold-400 uppercase tracking-wider">Event Location</span>
-          <span class="block text-xs text-gray-300">Tap to View Location on Google Maps 📍</span>
+
+        <div class="field">
+          <label class="lbl" for="regNo">Student registration number</label>
+          <input type="text" id="regNo" required autocomplete="off" placeholder="e.g. 23CI0125">
         </div>
-      </div>
-      <svg class="w-4 h-4 text-gold-400 transform group-hover:translate-x-1 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-      </svg>
-    </a>
 
-    <div class="mb-6 relative group">
-      <div class="absolute -inset-0.5 bg-gradient-to-r from-gold-400 to-gold-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
-      <div class="relative bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-black py-3 px-4 rounded-xl text-center font-display font-black text-2xl tracking-wide shadow-lg flex items-center justify-center gap-2">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z"></path>
-        </svg>
-        <span>LKR 5,000/=</span>
-      </div>
-    </div>
+        <div class="field">
+          <label class="lbl" for="email">Email address <em>Your ticket is sent here</em></label>
+          <input type="email" id="email" required autocomplete="email" placeholder="e.g. example@gmail.com">
+        </div>
 
-    <form id="regForm" class="space-y-4" onsubmit="handleRegistration(event)">
-      <div>
-        <label for="fullName" class="block text-xs font-semibold text-gold-400 uppercase tracking-wider mb-1">
-          Full Name <span class="text-red-500">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="fullName" 
-          required 
-          placeholder="e.g. Sahan Jayanindu" 
-          class="w-full px-4 py-3 rounded-lg text-sm text-white glass-input placeholder-gray-500 focus:ring-0"
-        >
-      </div>
+        <div class="field">
+          <label class="lbl" for="phone">WhatsApp number</label>
+          <input type="tel" id="phone" required autocomplete="tel" placeholder="e.g. 0771234567">
+        </div>
 
-      <div>
-        <label for="regNo" class="block text-xs font-semibold text-gold-400 uppercase tracking-wider mb-1">
-          Student / Reg No <span class="text-red-500">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="regNo" 
-          required 
-          placeholder="e.g. 23CI0125" 
-          class="w-full px-4 py-3 rounded-lg text-sm text-white glass-input placeholder-gray-500 focus:ring-0"
-        >
-      </div>
-
-      <div>
-        <label for="email" class="block text-xs font-semibold text-gold-400 uppercase tracking-wider mb-1">
-          Email Address <span class="text-red-500">*</span>
-        </label>
-        <input 
-          type="email" 
-          id="email" 
-          required 
-          placeholder="e.g. example@gmail.com" 
-          class="w-full px-4 py-3 rounded-lg text-sm text-white glass-input placeholder-gray-500 focus:ring-0"
-        >
-      </div>
-
-      <div>
-        <label for="phone" class="block text-xs font-semibold text-gold-400 uppercase tracking-wider mb-1">
-          WhatsApp Number <span class="text-red-500">*</span>
-        </label>
-        <input 
-          type="tel" 
-          id="phone" 
-          required 
-          placeholder="e.g. 0771234567" 
-          class="w-full px-4 py-3 rounded-lg text-sm text-white glass-input placeholder-gray-500 focus:ring-0"
-        >
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-gold-400 uppercase tracking-wider mb-1">
-          Upload Bank Slip <span class="text-red-500">*</span>
-        </label>
-        <div class="relative">
-          <input 
-            type="file" 
-            id="slip" 
-            accept="image/*,.pdf" 
-            required 
-            onchange="handleFileSelect(this)"
-            class="hidden"
-          >
-          <label 
-            for="slip" 
-            id="fileDropLabel"
-            class="flex flex-col items-center justify-center w-full py-4 px-4 rounded-lg border-2 border-dashed border-gold-400/40 hover:border-gold-400 bg-white/5 cursor-pointer transition duration-300 text-center"
-          >
-            <svg class="w-7 h-7 text-gold-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+        <div class="field">
+          <span class="lbl" id="slipLabel">Bank slip of LKR 5,000</span>
+          <input type="file" id="slip" class="sr" accept="image/*,.pdf" required onchange="handleFileSelect(this)" aria-labelledby="slipLabel">
+          <label for="slip" id="fileDropLabel" class="drop">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="square" aria-hidden="true">
+              <path d="M12 16V4m0 0L7 9m5-5l5 5M4 16v4h16v-4"/>
             </svg>
-            <span id="fileText" class="text-xs text-gray-300 font-medium">Click or drag bank slip / receipt here</span>
-            <span class="text-[10px] text-gray-500 mt-0.5">Supports JPG, PNG, PDF (Max 10MB)</span>
+            <span>
+              <span class="t1" id="fileText">Choose a file or drop it here</span><br>
+              <span class="t2">JPG, PNG or PDF, up to 10 MB</span>
+            </span>
           </label>
         </div>
+
+        <button type="submit" id="submitBtn" class="btn">Register and get my pass</button>
+      </form>
+    </main>
+  </div>
+
+  <p class="foot">Institute of Technology, University of Moratuwa. &copy; 2026 NDT Civil Engineering Community.</p>
+  <p class="tagline">BUILD &middot; CONNECT &middot; CELEBRATE</p>
+  <div class="hazard" aria-hidden="true"></div>
+
+  <!-- Site access pass -->
+  <div id="successModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+    <div class="pass" id="modalCard">
+      <div class="pass-top">
+        <div class="slot" aria-hidden="true"></div>
+        <small>NDT Civil Community</small>
+        <h3 id="passTitle">Cluster 2026<br>Entry pass</h3>
       </div>
-
-      <button 
-        type="submit" 
-        id="submitBtn"
-        class="w-full py-3.5 px-6 rounded-lg font-display font-bold text-base btn-gold flex items-center justify-center gap-2 mt-6 uppercase tracking-wider"
-      >
-        <span>Submit Registration</span>
-        <span class="text-lg">🎟️</span>
-      </button>
-    </form>
-
-    <p class="text-[10px] text-center text-gray-500 mt-6 tracking-wide">
-      © 2026 NDT Civil Engineering Community. All Rights Reserved.
-    </p>
-  </main>
-
-  <!-- Modal Pass Display -->
-  <div id="successModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-    <div class="glass-card max-w-sm w-full rounded-2xl p-6 text-center border-2 border-gold-400/60 shadow-2xl transform transition-all scale-95 opacity-0 my-auto" id="modalCard">
-      
-      <div class="w-14 h-14 bg-gold-400/20 text-gold-400 rounded-full flex items-center justify-center mx-auto mb-3 border border-gold-400/50 shadow-lg">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-
-      <h3 class="font-display text-2xl font-black gold-gradient-text uppercase tracking-wide mb-1">
-        REGISTRATION SUCCESSFUL!
-      </h3>
-      <p class="text-xs text-gray-300 mb-4">
-        Your entry pass has been generated. An official ticket has also been sent to your email.
-      </p>
-
-      <div class="bg-gradient-to-b from-black/80 to-zinc-950 rounded-xl p-4 text-center border border-gold-400/40 mb-5 relative overflow-hidden shadow-inner">
-        <div class="text-[10px] font-extrabold text-gold-400 tracking-widest uppercase mb-2">
-          ★ CLUSTER 2026 ENTRY PASS ★
+      <div class="pass-body">
+        <div class="ok-line">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+          Registration complete
         </div>
-
-        <div class="bg-white p-2 rounded-xl inline-block border-2 border-gold-400 mb-2 shadow-md">
-          <img id="qrImage" src="" alt="Event Pass QR Code" class="w-36 h-36 mx-auto rounded">
-        </div>
-
-        <span id="mTicketId" class="font-mono font-bold text-gold-400 text-sm tracking-widest block mb-3">
-          TICKET ID: CLR-000000
-        </span>
-
-        <div class="bg-white/5 rounded-lg p-2.5 text-left text-xs space-y-1.5 border border-white/10">
-          <div class="flex justify-between"><span class="text-gray-400">Pass Holder:</span> <span id="mName" class="text-gold-300 font-bold"></span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Reg No:</span> <span id="mReg" class="text-white font-medium"></span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Date:</span> <span class="text-white font-medium">7th Nov 2026</span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Status:</span> <span class="text-green-400 font-bold">CONFIRMED ✓</span></div>
+        <br>
+        <div class="qr"><img id="qrImage" src="" alt="Entry pass QR code"></div>
+        <span id="mTicketId">TICKET ID: CLR-000000</span>
+        <div class="rows">
+          <div><span>Pass holder</span><span id="mName"></span></div>
+          <div><span>Reg no</span><span id="mReg"></span></div>
+          <div><span>Date</span><span>7th Nov 2026</span></div>
+          <div><span>Status</span><span class="st">Confirmed</span></div>
         </div>
       </div>
-
-      <!-- Single Full-Width DONE Button (Print Pass Removed) -->
-      <button onclick="closeModal()" class="w-full py-3 rounded-lg btn-gold font-bold text-sm uppercase tracking-wider shadow-lg">
-        DONE
-      </button>
+      <p class="pass-note">Show this QR code at the gate. A copy was emailed to you.</p>
+      <button class="btn" onclick="closeModal()">Done</button>
     </div>
   </div>
 
-  <div id="errorToast" class="fixed bottom-5 right-5 max-w-sm bg-red-950/90 border border-red-500/80 text-white rounded-xl p-4 shadow-2xl backdrop-blur-lg hidden z-50 transform transition-all duration-300 translate-y-10 opacity-0 flex items-start gap-3">
-    <div class="p-2 bg-red-500/20 text-red-400 rounded-lg border border-red-500/40">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
+  <!-- Error toast -->
+  <div id="errorToast" class="toast" role="alert" aria-live="assertive">
+    <div>
+      <b>Could not register</b>
+      <p id="errorToastText"></p>
     </div>
-    <div class="flex-1 text-left">
-      <h4 class="text-xs font-bold text-red-400 uppercase tracking-wider mb-0.5">Submission Error</h4>
-      <p id="errorToastText" class="text-xs text-gray-200"></p>
-    </div>
-    <button onclick="hideErrorToast()" class="text-gray-400 hover:text-white text-sm font-bold">✕</button>
+    <button onclick="hideErrorToast()" aria-label="Close message">&#10005;</button>
   </div>
 
   <script>
-    // ⚠️ Correct Google Apps Script Web App URL
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzL0pnFHZNUR5ATOhFIMCHKf1pmDv0ehq7YeVb8RJW3QkBCrmXXe0WTaS316_yQtd0oFQ/exec"; 
+    // Google Apps Script Web App URL (unchanged)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzL0pnFHZNUR5ATOhFIMCHKf1pmDv0ehq7YeVb8RJW3QkBCrmXXe0WTaS316_yQtd0oFQ/exec";
 
     const eventDate = new Date("Nov 7, 2026 18:00:00").getTime();
+    const siteOpened = new Date("Oct 1, 2026 00:00:00").getTime(); // start of the progress bar
+
+    const pad = n => (n < 10 ? '0' + n : String(n));
 
     function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = eventDate - now;
+      const now = Date.now();
+      const diff = Math.max(eventDate - now, 0);
 
-      if (diff > 0) {
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById("days").innerText = pad(Math.floor(diff / 86400000));
+      document.getElementById("hours").innerText = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById("mins").innerText = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById("secs").innerText = pad(Math.floor((diff % 60000) / 1000));
 
-        document.getElementById("days").innerText = days < 10 ? '0' + days : days;
-        document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
-        document.getElementById("mins").innerText = mins < 10 ? '0' + mins : mins;
-        document.getElementById("secs").innerText = secs < 10 ? '0' + secs : secs;
-      }
+      const pct = Math.min(100, Math.max(0, ((now - siteOpened) / (eventDate - siteOpened)) * 100));
+      document.getElementById("progressBar").style.width = pct.toFixed(1) + "%";
+      document.getElementById("progressPct").innerText = Math.round(pct) + "%";
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    const fileText = document.getElementById('fileText');
+    const dropLabel = document.getElementById('fileDropLabel');
+    const slipInput = document.getElementById('slip');
+    const DEFAULT_FILE_TEXT = "Choose a file or drop it here";
+
     function handleFileSelect(input) {
-      const labelText = document.getElementById('fileText');
       if (input.files && input.files[0]) {
         if (input.files[0].size > 10 * 1024 * 1024) {
-          showErrorToast("File size exceeds 10MB limit. Please upload a smaller bank slip.");
+          showErrorToast("That file is over 10 MB. Attach a smaller bank slip.");
           input.value = "";
+          fileText.innerText = DEFAULT_FILE_TEXT;
+          dropLabel.classList.remove('has-file');
           return;
         }
-        labelText.innerText = "Selected: " + input.files[0].name;
-        labelText.classList.add('text-gold-400', 'font-semibold');
+        fileText.innerText = input.files[0].name;
+        dropLabel.classList.add('has-file');
       }
+    }
+
+    // drag & drop support
+    ['dragenter', 'dragover'].forEach(ev => dropLabel.addEventListener(ev, e => {
+      e.preventDefault(); dropLabel.classList.add('drag');
+    }));
+    ['dragleave', 'drop'].forEach(ev => dropLabel.addEventListener(ev, e => {
+      e.preventDefault(); dropLabel.classList.remove('drag');
+    }));
+    dropLabel.addEventListener('drop', e => {
+      if (e.dataTransfer && e.dataTransfer.files.length) {
+        slipInput.files = e.dataTransfer.files;
+        handleFileSelect(slipInput);
+      }
+    });
+
+    function resetSubmitButton() {
+      const btn = document.getElementById('submitBtn');
+      btn.innerHTML = 'Register and get my pass';
+      btn.disabled = false;
     }
 
     async function handleRegistration(e) {
       e.preventDefault();
-      
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.innerHTML = `<span>Processing Registration...</span> <span class="animate-spin text-lg">⏳</span>`;
-      submitBtn.disabled = true;
 
-      const fileInput = document.getElementById('slip').files[0];
-      
+      const submitBtn = document.getElementById('submitBtn');
+      const fileInput = slipInput.files[0];
+
       if (!fileInput) {
-        showErrorToast("Please select and upload your bank slip.");
-        resetSubmitButton();
+        showErrorToast("Attach your bank slip before registering.");
         return;
       }
 
+      submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span>Registering...</span>';
+      submitBtn.disabled = true;
+
       const reader = new FileReader();
-      reader.readAsDataURL(fileInput);
+      reader.onerror = function () {
+        showErrorToast("The file could not be read. Pick it again and retry.");
+        resetSubmitButton();
+      };
       reader.onload = async function () {
         const base64Data = reader.result.split(',')[1];
 
@@ -450,31 +528,24 @@
         try {
           const response = await fetch(WEB_APP_URL, {
             method: "POST",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8"
-            },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload)
           });
-          
+
           const res = await response.json();
 
           if (res.result === "success") {
             showSuccessModal(payload.fullName, payload.regNo, res.ticketId, res.qrUrl);
           } else {
-            showErrorToast(res.error || "Submission failed. Please try again.");
+            showErrorToast(res.error || "Registration failed. Check your details and try again.");
           }
         } catch (err) {
-          showErrorToast("Network connection error. Please check your internet and try again.");
+          showErrorToast("No connection. Check your internet and try again.");
         } finally {
           resetSubmitButton();
         }
       };
-    }
-
-    function resetSubmitButton() {
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.innerHTML = `<span>Submit Registration</span> <span class="text-lg">🎟️</span>`;
-      submitBtn.disabled = false;
+      reader.readAsDataURL(fileInput);
     }
 
     function showSuccessModal(name, regNo, ticketId, qrUrl) {
@@ -483,53 +554,29 @@
       document.getElementById('mTicketId').innerText = "TICKET ID: " + ticketId;
       document.getElementById('qrImage').src = qrUrl;
 
-      const modal = document.getElementById('successModal');
-      const modalCard = document.getElementById('modalCard');
-
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modalCard.classList.remove('scale-95', 'opacity-0');
-        modalCard.classList.add('scale-100', 'opacity-100');
-      }, 10);
+      document.getElementById('successModal').classList.add('open');
+      setTimeout(() => document.getElementById('modalCard').classList.add('show'), 10);
     }
 
     function closeModal() {
-      const modal = document.getElementById('successModal');
-      const modalCard = document.getElementById('modalCard');
-
-      modalCard.classList.remove('scale-100', 'opacity-100');
-      modalCard.classList.add('scale-95', 'opacity-0');
-      
+      document.getElementById('modalCard').classList.remove('show');
       setTimeout(() => {
-        modal.classList.add('hidden');
+        document.getElementById('successModal').classList.remove('open');
         document.getElementById('regForm').reset();
-        document.getElementById('fileText').innerText = "Click or drag bank slip / receipt here";
-        document.getElementById('fileText').classList.remove('text-gold-400', 'font-semibold');
-      }, 200);
+        fileText.innerText = DEFAULT_FILE_TEXT;
+        dropLabel.classList.remove('has-file');
+      }, 250);
     }
 
+    let toastTimer;
     function showErrorToast(msg) {
-      const toast = document.getElementById('errorToast');
       document.getElementById('errorToastText').innerText = msg;
-
-      toast.classList.remove('hidden');
-      setTimeout(() => {
-        toast.classList.remove('translate-y-10', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-      }, 10);
-
-      setTimeout(() => {
-        hideErrorToast();
-      }, 6000);
+      document.getElementById('errorToast').classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideErrorToast, 6000);
     }
-
     function hideErrorToast() {
-      const toast = document.getElementById('errorToast');
-      toast.classList.remove('translate-y-0', 'opacity-100');
-      toast.classList.add('translate-y-10', 'opacity-0');
-      setTimeout(() => {
-        toast.classList.add('hidden');
-      }, 300);
+      document.getElementById('errorToast').classList.remove('show');
     }
   </script>
 </body>

@@ -82,19 +82,6 @@
     .fee { font-family: var(--font-display); font-size: 32px; font-weight: 800; line-height: 1; color: var(--gold); }
     .fee small { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 6px; }
 
-    /* ---------- Countdown ---------- */
-    .clock { margin-top: 18px; background: var(--panel); border: 1px solid var(--gold2); border-radius: 10px; padding: 16px 18px 18px; }
-    .clock h2 { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
-    .cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .cell { background: var(--panel2); border-radius: 6px; padding: 8px 4px 6px; text-align: center; }
-    .cell b { display: block; font-family: var(--font-display); font-size: clamp(34px, 8vw, 46px); font-weight: 800; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
-    .cell:last-child b { color: var(--gold); }
-    .cell span { font-size: 11px; color: var(--muted); }
-    .progress { margin-top: 14px; }
-    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    .bar { height: 10px; background: var(--panel2); border-radius: 5px; overflow: hidden; }
-    .bar div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-d), var(--gold)); border-radius: 5px; transition: width .8s ease; }
-
     /* ---------- Form sheet ---------- */
     .sheet { background: var(--panel); border: 1px solid var(--gold2); border-top: 8px solid var(--gold); border-radius: 10px; padding: 26px 24px 24px; box-shadow: 0 20px 40px -20px rgba(0,0,0,.9), 0 0 40px -20px rgba(255,209,0,.35); }
     .sheet h2 { font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1; margin-bottom: 4px; color: #fff; }
@@ -233,8 +220,6 @@
       .dim { font-size: 11px; gap: 8px; margin: 12px 0 14px; }
       .specs th, .specs td { padding: 10px 12px; font-size: 13px; }
       .fee { font-size: 28px; }
-      .clock { padding: 14px; }
-      .cells { gap: 6px; }
       .sheet { padding: 20px 16px 18px; border-radius: 10px; }
       .sheet h2 { font-size: 32px; }
       .sheet .lede { font-size: 13px; margin-bottom: 16px; }
@@ -251,15 +236,14 @@
     }
     @media (max-width: 340px) {
       .board-head img { display: none; }
-      .cell b { font-size: 30px; }
     }
     @media (prefers-reduced-motion: reduce) { .title .gold { animation: none; } }
 
     /* ===== Civil engineering photo background ===== */
     :root {
       --photo: url("https://lh3.googleusercontent.com/d/1QjTDEmXTtjwZizm68hzgycT4kmi98GVy");
-      --dim-top: .55;   /* photo darkness at the top: 0 = clear, 1 = black */
-      --dim-bottom: .90; /* photo darkness at the bottom */
+      --dim-top: .55;
+      --dim-bottom: .90;
     }
     body::before {
       content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -275,9 +259,7 @@
       background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
     }
     .nav { background: rgba(11,11,13,.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-    .clock { background: rgba(18,18,21,.92); }
 
-    /* Phone tuning for the photo */
     body::before { height: 100vh; height: 100lvh; transform: translateZ(0); }
     @media (max-width: 700px) {
       :root { --dim-top: .45; --dim-bottom: .85; }
@@ -285,6 +267,144 @@
     }
     @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
+    /* ===== New countdown: sits full width under the navbar ===== */
+    #countdown { border-bottom: 1px solid var(--gold2); }
+    #countdown h2 { margin-bottom: 0; }
+
+  .cc { --cc-black: #080808; --cc-charcoal: #202020; --cc-gold: #D4AF37; --cc-champagne: #F5E6A8;
+    --cc-gold-line: rgba(212,175,55,.38); --cc-gold-soft: rgba(212,175,55,.09); --cc-ink-dim: #b9ad86;
+    --cc-serif: var(--font-display); --cc-sans: var(--font-body); }
+
+  
+  .cc { position: relative; overflow: hidden; color: var(--cc-champagne); font-family: var(--cc-sans);
+    padding: clamp(56px, 9vw, 120px) clamp(20px, 6vw, 80px);
+    background:
+      radial-gradient(60% 70% at 78% 45%, rgba(212,175,55,.09), transparent 70%),
+      linear-gradient(var(--cc-gold-soft) 1px, transparent 1px) 0 0 / 120px 120px,
+      linear-gradient(90deg, var(--cc-gold-soft) 1px, transparent 1px) 0 0 / 120px 120px,
+      linear-gradient(rgba(212,175,55,.04) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, rgba(212,175,55,.04) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(180deg, var(--cc-charcoal) 0%, var(--cc-black) 38%); }
+  .cc::before, .cc::after { content: ""; position: absolute; width: 30px; height: 30px; border: 1px solid var(--cc-gold-line); pointer-events: none; }
+  .cc::before { top: 22px; left: 22px; border-right: 0; border-bottom: 0; }
+  .cc::after { bottom: 22px; right: 22px; border-left: 0; border-top: 0; }
+
+  .cc-inner { position: relative; max-width: 1120px; margin: 0 auto; display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+
+  .cc-eyebrow { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: .24em; color: var(--cc-gold); }
+  .cc-eyebrow::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--cc-gold-line), transparent); }
+  .cc h2 { margin: 22px 0 0; font-family: var(--cc-serif); font-weight: 800; font-size: clamp(34px, 4.6vw, 58px); line-height: 1; letter-spacing: .02em; text-transform: uppercase; color: var(--cc-champagne); }
+  .cc-sub { margin: 16px 0 0; max-width: 44ch; font-size: 15px; line-height: 1.6; font-weight: 400; color: var(--cc-ink-dim); }
+
+  .cc-days-row { display: flex; align-items: flex-end; gap: 18px; margin-top: clamp(26px, 4vw, 44px); }
+  .cc-days { min-width: 1.1em; font-family: var(--cc-serif); font-weight: 800; font-size: clamp(96px, 15vw, 188px); line-height: .8; letter-spacing: 0;
+    font-variant-numeric: tabular-nums lining-nums;
+    background: linear-gradient(180deg, var(--cc-champagne) 0%, var(--cc-gold) 52%, #8c6d17 100%); background-size: 100% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 22px rgba(212,175,55,.28)); }
+  .cc-days-cap { padding-bottom: 8px; font-size: 12px; font-weight: 700; letter-spacing: .26em; color: var(--cc-gold); line-height: 1.8; }
+
+  .cc-rule { height: 1px; margin-top: 30px; background: linear-gradient(90deg, var(--cc-gold), var(--cc-gold-line) 40%, transparent); }
+  .cc-hms { display: flex; align-items: stretch; gap: clamp(14px, 3vw, 28px); margin-top: 20px; font-variant-numeric: tabular-nums lining-nums; }
+  .cc-hms div { display: flex; flex-direction: column; gap: 6px; min-width: 2.4ch; }
+  .cc-hms b { font-family: var(--cc-serif); font-weight: 800; font-size: clamp(34px, 5vw, 52px); line-height: 1; letter-spacing: .02em; color: var(--cc-champagne); }
+  .cc-hms i { font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .22em; color: var(--cc-gold); }
+  .cc-hms .sep { width: 1px; min-width: 1px; background: linear-gradient(180deg, transparent, var(--cc-gold), transparent); }
+
+  .cc-dim { margin-top: 30px; }
+  .cc-dim svg { display: block; width: 100%; height: 22px; overflow: visible; }
+  .cc-dim .l { stroke: var(--cc-gold-line); stroke-width: 1; }
+  .cc-dim .t { stroke: var(--cc-gold); stroke-width: 1.5; }
+  .cc-dim .f { stroke: var(--cc-champagne); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(212,175,55,.8)); }
+  .cc-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 8px; font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--cc-ink-dim); font-variant-numeric: tabular-nums; }
+  .cc-meta b { color: var(--cc-gold); font-weight: 700; }
+
+  /* scene */
+  .cc-scene svg { display: block; width: 100%; max-width: 580px; height: auto; margin: 0 auto; overflow: visible; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+  .cc-scene svg:active { cursor: grabbing; }
+  .cc-scene svg:focus-visible { outline: 1px dashed var(--cc-gold); outline-offset: 6px; }
+  .cc-hint { margin-top: 4px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: .22em; color: var(--cc-ink-dim); opacity: .8; }
+  .cc-scene .site { stroke: rgba(212,175,55,.2); stroke-width: .5; fill: none; }
+  .cc-scene .plot { stroke: rgba(212,175,55,.7); stroke-width: .9; fill: rgba(212,175,55,.03); }
+  .cc-scene .wf { fill: rgba(212,175,55,.035); stroke: url(#cc-metal); stroke-width: .9; stroke-linejoin: round; }
+  .cc-scene .wf.top { fill: rgba(245,230,168,.09); }
+  .cc-scene .col { stroke: url(#cc-metal); stroke-width: 2.4; }
+  .cc-scene .col.hot, .cc-scene .ant.hot { stroke: var(--cc-champagne); }
+  .cc-scene .panel { fill: rgba(212,175,55,.04); stroke: rgba(212,175,55,.5); stroke-width: .6; }
+  .cc-scene .panel.back { fill: none; stroke: rgba(212,175,55,.14); }
+  .cc-scene .glass { fill: rgba(212,175,55,.13); stroke: rgba(245,230,168,.7); stroke-width: .5; }
+  .cc-scene .node { fill: var(--cc-champagne); }
+  .cc-scene .node-h { fill: rgba(245,230,168,.2); }
+  .cc-scene .ant { stroke: var(--cc-gold); stroke-width: 1.8; }
+  .cc-scene .beacon { fill: #fff; }
+  .cc-scene .crane { stroke: rgba(212,175,55,.3); stroke-width: .8; fill: none; }
+  .cc-scene .hook { stroke: rgba(245,230,168,.6); stroke-width: .7; }
+  .cc-scene .dim { stroke: rgba(245,230,168,.65); stroke-width: .6; fill: none; }
+  .cc-scene .dimt { fill: var(--cc-champagne); font-size: 7.5px; letter-spacing: .12em; font-family: var(--cc-sans); font-weight: 600; }
+  .cc-scene .tb { stroke: rgba(212,175,55,.55); stroke-width: .6; fill: none; }
+  .cc-scene .tbt { fill: var(--cc-ink-dim); stroke: none; font-size: 5.6px; letter-spacing: .14em; font-family: var(--cc-sans); font-weight: 600; }
+  .cc-scene .halo { fill: url(#cc-halo); opacity: .2; }
+  .cc-scene.lit #cc-bldg { filter: drop-shadow(0 0 10px rgba(245,230,168,.55)) drop-shadow(0 0 28px rgba(212,175,55,.4)); }
+  .cc-scene.lit .beacon { animation: cc-blink 2.8s ease-in-out infinite; }
+  @keyframes cc-blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+  .cc-event { display: none; }
+  .cc.is-event .cc-live { display: none; }
+  .cc.is-event .cc-event { display: block; animation: cc-rise 1.6s ease both; }
+  .cc-event h2 { font-size: clamp(44px, 7.5vw, 92px); letter-spacing: .02em; margin-top: 22px;
+    background: linear-gradient(100deg, var(--cc-gold) 20%, var(--cc-champagne) 45%, var(--cc-gold) 70%); background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+    animation: cc-sheen 5s ease-in-out infinite; }
+  .cc-event p { margin: 20px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .18em; color: var(--cc-ink-dim); line-height: 1.9; }
+  @keyframes cc-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes cc-sheen { 0%,100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+
+  @media (max-width: 860px) {
+    .cc-inner { grid-template-columns: 1fr; }
+    .cc-scene { order: -1; }
+    .cc-scene svg { max-width: 400px; }
+    .cc::before, .cc::after { width: 18px; height: 18px; top: 14px; left: 14px; }
+    .cc::after { top: auto; left: auto; bottom: 14px; right: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cc-event, .cc-event h2, .cc-scene.lit .beacon { animation: none; }
+  }
+
+
+  /* ===== Compact two-side countdown: text left, building right, on every screen ===== */
+  .cc { padding: clamp(16px, 2.6vw, 30px) clamp(14px, 4vw, 48px); }
+  .cc::before, .cc::after { display: none; }
+  .cc-inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(12px, 3vw, 40px); align-items: center; }
+  .cc-scene { order: 0; }
+  .cc-scene svg { max-width: 380px; }
+  .cc h2 { margin-top: 10px; font-size: clamp(20px, 3vw, 34px); }
+  .cc-sub { margin-top: 8px; font-size: 13px; }
+  .cc-days-row { margin-top: clamp(10px, 1.8vw, 16px); gap: 12px; }
+  .cc-days { font-size: clamp(54px, 8.5vw, 104px); }
+  .cc-days-cap { padding-bottom: 4px; font-size: 11px; letter-spacing: .2em; }
+  .cc-rule { margin-top: 14px; }
+  .cc-hms { margin-top: 12px; gap: clamp(8px, 2vw, 20px); }
+  .cc-hms b { font-size: clamp(24px, 3.4vw, 38px); }
+  .cc-hms i { font-size: 10px; letter-spacing: .14em; }
+  .cc-dim { margin-top: 14px; }
+  .cc-hint { margin-top: 0; }
+  .cc-event h2 { font-size: clamp(26px, 4.4vw, 52px); margin-top: 10px; }
+  .cc-event p { margin-top: 10px; font-size: 11px; letter-spacing: .12em; line-height: 1.7; }
+  @media (max-width: 620px) {
+    .cc-eyebrow { font-size: 10px; letter-spacing: .12em; gap: 8px; }
+    .cc-eyebrow::after, .cc-sub, .cc-hint { display: none; }
+    .cc h2 { font-size: 18px; line-height: 1.05; }
+    .cc-days-row { gap: 8px; }
+    .cc-days-cap { font-size: 9px; letter-spacing: .1em; }
+    .cc-hms { gap: 6px; }
+    .cc-hms div { min-width: 0; gap: 3px; }
+    .cc-hms b { font-size: 22px; }
+    .cc-hms i { font-size: 8px; letter-spacing: .04em; }
+    .cc-rule { margin-top: 10px; } .cc-hms { margin-top: 8px; } .cc-dim { margin-top: 10px; }
+    .cc-meta { font-size: 9px; letter-spacing: .04em; gap: 4px; }
+    .cc-event h2 { font-size: 22px; } .cc-event p { font-size: 9px; letter-spacing: .06em; }
+  }
   </style>
 </head>
 <body>
@@ -301,12 +421,72 @@
     <div class="sheet-ref">Registration<br>Annual get-together</div>
   </div></div>
 
+<section class="cc" id="countdown" aria-label="Countdown to the NDT Civil Engineering Division Get-Together 2026"
+         data-start="2026-08-01T00:00:00+05:30" data-target="2026-11-07T18:00:00+05:30">
+  <div class="cc-inner">
+    <div class="cc-text">
+      <div class="cc-live">
+        <div class="cc-eyebrow">07 NOVEMBER 2026</div>
+        <h2>The foundation is set. The day is near.</h2>
+        <p class="cc-sub">Every second brings us closer to a day worth remembering.</p>
+
+        <div class="cc-days-row">
+          <div class="cc-days" id="cc-days" aria-live="polite">--</div>
+          <div class="cc-days-cap" id="cc-dcap">DAYS<br>TO GO</div>
+        </div>
+        <div class="cc-rule"></div>
+        <div class="cc-hms" role="timer" aria-label="Hours, minutes and seconds remaining">
+          <div><b id="cc-h">--</b><i>HOURS</i></div><span class="sep"></span>
+          <div><b id="cc-m">--</b><i>MINUTES</i></div><span class="sep"></span>
+          <div><b id="cc-s">--</b><i>SECONDS</i></div>
+        </div>
+        <div class="cc-dim" aria-hidden="true">
+          <svg viewBox="0 0 1000 22" preserveAspectRatio="none">
+            <line class="l" x1="0" y1="11" x2="1000" y2="11"/>
+            <line class="t" x1="0" y1="2" x2="0" y2="20"/><line class="t" x1="1000" y1="2" x2="1000" y2="20"/>
+            <line class="f" id="cc-bar" x1="0" y1="11" x2="0" y2="11"/>
+          </svg>
+        </div>
+        <div class="cc-meta"><span id="cc-stage"></span><span id="cc-pct"></span></div>
+      </div>
+
+      <div class="cc-event" role="status">
+        <div class="cc-eyebrow">07 NOVEMBER 2026</div>
+        <h2>The day is here.</h2>
+        <p>WELCOME TO THE NDT CIVIL ENGINEERING<br>DIVISION GET-TOGETHER 2026</p>
+      </div>
+    </div>
+
+    <div class="cc-scene" id="cc-scene">
+      <svg id="cc-svg" viewBox="0 0 460 420" tabindex="0" role="img"
+           aria-label="A golden wireframe building that is constructed floor by floor as the event approaches. Drag, or use the left and right arrow keys, to rotate it.">
+        <defs>
+          <radialGradient id="cc-halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#D4AF37" stop-opacity=".4"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+          <linearGradient id="cc-metal" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="460" y2="0">
+            <stop offset="0" stop-color="#D4AF37"/><stop offset=".4" stop-color="#C9A32F"/>
+            <stop offset=".5" stop-color="#F5E6A8"/><stop offset=".6" stop-color="#C9A32F"/><stop offset="1" stop-color="#D4AF37"/>
+            <animateTransform id="cc-sweep" attributeName="gradientTransform" type="translate" from="-520 0" to="520 0" dur="9s" repeatCount="indefinite"/>
+          </linearGradient>
+        </defs>
+        <ellipse class="halo" id="cc-halo-el" cx="230" cy="190" rx="250" ry="205"/>
+        <g id="cc-bldg"></g>
+        <g class="tb" transform="translate(300 384)">
+          <rect width="156" height="30"/><line x1="0" y1="14" x2="156" y2="14"/>
+          <text class="tbt" x="6" y="10">NDT CIVIL ENGINEERING DIVISION</text>
+          <text class="tbt" x="6" y="23">ELEVATION A, GET-TOGETHER 2026</text>
+        </g>
+      </svg>
+      <div class="cc-hint" aria-hidden="true">DRAG TO ROTATE</div>
+    </div>
+  </div>
+</section>
+
   <div class="layout">
 
-    <!-- LEFT: site signboard + countdown -->
+    <!-- LEFT: site signboard -->
     <section class="left" aria-label="Event details">
       <div class="board">
-                <div class="board-head">
+        <div class="board-head">
           <span class="badge">ENTRY PASS | ADMIT ONE</span>
           <img src="https://lh3.googleusercontent.com/d/1xAfVKOlZf13Lu-lpNTWc4pwkXaQSccYc" alt="CLUSTER 2026 logo">
         </div>
@@ -326,20 +506,6 @@
           </tr>
           <tr><th scope="row">Entry fee</th><td><span class="fee">LKR 5,000/=</span><small>per person</small></td></tr>
         </table>
-      </div>
-
-      <div class="clock" role="timer" aria-label="Countdown to the event">
-        <h2>Time left until the event</h2>
-        <div class="cells">
-          <div class="cell"><b id="days">00</b><span>days</span></div>
-          <div class="cell"><b id="hours">00</b><span>hours</span></div>
-          <div class="cell"><b id="mins">00</b><span>minutes</span></div>
-          <div class="cell"><b id="secs">00</b><span>seconds</span></div>
-        </div>
-        <div class="progress">
-          <div class="progress-label"><span>Countdown progress</span><span id="progressPct">0%</span></div>
-          <div class="bar"><div id="progressBar"></div></div>
-        </div>
       </div>
     </section>
 
@@ -429,30 +595,242 @@
     <button onclick="hideErrorToast()" aria-label="Close message">&#10005;</button>
   </div>
 
+<script>
+(function () {
+  var root = document.getElementById("countdown");
+  var START = new Date(root.dataset.start).getTime();
+  var TARGET = new Date(root.dataset.target).getTime();   // 2026-11-07 18:00 Asia/Colombo (+05:30)
+  var DAY = 86400000, KEY = "ndtCivilCountdownSeen";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Preview helper: add ?now=2026-11-06T12:00:00%2B05:30 to the page URL to simulate that moment.
+  var OFFSET = 0, qn = new URLSearchParams(location.search).get("now");
+  if (qn && !isNaN(new Date(qn).getTime())) OFFSET = new Date(qn).getTime() - Date.now();
+  var NOW = function () { return Date.now() + OFFSET; };
+  var save = function (v) { if (!OFFSET) { try { localStorage.setItem(KEY, String(v)); } catch (e) {} } };
+
+  // building: 8 floors, 4 x 2 bays
+  var FLOORS = 8, FH = 40, SL = 4, B = 4, BAY = 60, NX = 4, NZ = 2, HX = 120, HZ = 60, M_PER_U = 3.2 / FH;
+  var PITCH = 24 * Math.PI / 180, cp = Math.cos(PITCH), sp = Math.sin(PITCH);
+  var S = 0.68, CX = 230, CY = 312;
+
+  var clamp = function (v) { return Math.min(1, Math.max(0, v)); };
+  var seg = function (p, a, b) { return clamp((p - a) / (b - a)); };
+  var lvl = function (p, i, a, b) { return clamp(seg(p, a, b) * FLOORS - i); };
+  var pad = function (n) { return String(n).padStart(2, "0"); };
+  var f1 = function (n) { return n.toFixed(1); };
+  var f2 = function (n) { return n.toFixed(2); };
+
+  var scene = document.getElementById("cc-scene"), svg = document.getElementById("cc-svg");
+  var g = document.getElementById("cc-bldg"), halo = document.getElementById("cc-halo-el");
+  if (reduce) { var sw = document.getElementById("cc-sweep"); if (sw) sw.remove(); }
+
+  var yaw = 38 * Math.PI / 180, c = Math.cos(yaw), s = Math.sin(yaw);
+  var out, over, glow = 0;
+
+  function P(x, y, z) {
+    var xr = x * c - z * s, zr = x * s + z * c;
+    return { x: CX + S * xr, y: CY - S * (y * cp + zr * sp), d: zr * cp - y * sp };
+  }
+  function pts(arr) { return arr.map(function (p) { return f1(p.x) + "," + f1(p.y); }).join(" "); }
+  function poly(arr3, attrs, bias) {
+    var pr = arr3.map(function (a) { return P(a[0], a[1], a[2]); }), d = 0;
+    pr.forEach(function (p) { d += p.d; });
+    out.push({ d: d / pr.length + (bias || 0), s: "<polygon " + attrs + ' points="' + pts(pr) + '"/>' });
+  }
+  function seg3(a, b, cls, bias, list) {
+    var p = P(a[0], a[1], a[2]), q = P(b[0], b[1], b[2]);
+    (list || out).push({ d: (p.d + q.d) / 2 + (bias || 0), s: '<line class="' + cls + '" x1="' + f1(p.x) + '" y1="' + f1(p.y) + '" x2="' + f1(q.x) + '" y2="' + f1(q.y) + '"/>' });
+  }
+  function dot(x, y, z, hot) {
+    var p = P(x, y, z);
+    out.push({ d: p.d - 1, s: '<circle class="node-h" cx="' + f1(p.x) + '" cy="' + f1(p.y) + '" r="' + (hot ? 6 : 4.5) + '"/><circle class="node" cx="' + f1(p.x) + '" cy="' + f1(p.y) + '" r="1.7"/>' });
+  }
+  // wireframe box: top outline + visible side faces only
+  function wbox(x0, x1, y0, y1, z0, z1, top) {
+    poly([[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]], 'class="wf' + (top ? " top" : "") + '"');
+    [[1, 0, x1], [-1, 0, x0], [0, 1, z1], [0, -1, z0]].forEach(function (f) {
+      var nx = f[0], nz = f[1];
+      if (nx * s + nz * c >= 0) return;
+      poly(nx !== 0 ? [[f[2], y0, z0], [f[2], y0, z1], [f[2], y1, z1], [f[2], y1, z0]]
+                    : [[x0, y0, f[2]], [x1, y0, f[2]], [x1, y1, f[2]], [x0, y1, f[2]]], 'class="wf"');
+    });
+  }
+  function label(x, y, z, str, anchor) {
+    var p = P(x, y, z);
+    over.push({ d: 0, s: '<text class="dimt" x="' + f1(p.x) + '" y="' + f1(p.y) + '" text-anchor="' + (anchor || "middle") + '">' + str + "</text>" });
+  }
+
+  function build(p) {
+    out = []; over = [];
+    var site = "", gx, gz, PX = 200, PZ = 120;
+    var pp = [[-PX, 0, -PZ], [PX, 0, -PZ], [PX, 0, PZ], [-PX, 0, PZ]].map(function (a) { return P(a[0], a[1], a[2]); });
+    site += '<polygon class="plot" points="' + pts(pp) + '"/>';
+    for (gx = -PX + 40; gx < PX; gx += 40) { var a = P(gx, 0, -PZ), b = P(gx, 0, PZ); site += '<line class="site" x1="' + f1(a.x) + '" y1="' + f1(a.y) + '" x2="' + f1(b.x) + '" y2="' + f1(b.y) + '"/>'; }
+    for (gz = -PZ + 40; gz < PZ; gz += 40) { var a2 = P(-PX, 0, gz), b2 = P(PX, 0, gz); site += '<line class="site" x1="' + f1(a2.x) + '" y1="' + f1(a2.y) + '" x2="' + f1(b2.x) + '" y2="' + f1(b2.y) + '"/>'; }
+
+    wbox(-140, -140 + 280 * Math.max(0.6, seg(p, 0, 0.05)), -10, B, -80, 80);
+
+    var topSlab = -1, curTop = B, q;
+    for (q = 0; q < FLOORS; q++) if (seg(lvl(p, q, 0.05, 0.60), 0.5, 1) > 0.001) topSlab = q;
+
+    for (var i = 0; i < FLOORS; i++) {
+      var y0 = B + i * FH, yt = y0 + FH - SL;
+      var fv = lvl(p, i, 0.05, 0.60), colv = seg(fv, 0, 0.6), beamv = seg(fv, 0.5, 1), cl = lvl(p, i, 0.60, 0.92);
+      var fg = clamp(glow * (FLOORS + 2) - i), hot = fg > 0.35 ? " hot" : "";
+      for (var kx = 0; kx <= NX; kx++) for (var kz = 0; kz <= NZ; kz++) {
+        var stub = (i === 0 && kx % 2 === 0 && kz !== 1) ? 0.3 : 0, v = Math.max(stub, colv);
+        var cx = -HX + BAY * kx, cz = -HZ + BAY * kz;
+        if (v > 0.001) { seg3([cx, y0, cz], [cx, y0 + v * (FH - SL), cz], "col" + hot, -0.5); curTop = Math.max(curTop, y0 + v * (FH - SL)); }
+        if (colv > 0.99 && beamv > 0.5) dot(cx, yt + SL / 2, cz, !!hot);
+      }
+      if (beamv > 0.001) { wbox(-126, -126 + 252 * beamv, yt, yt + SL, -66, 66, i === topSlab); curTop = Math.max(curTop, yt + SL); }
+      if (cl > 0.001) {
+        var h = (FH - SL - 1) * seg(cl, 0, 0.55), yb = y0 + 1;
+        var gs = fg > 0.01 ? ' style="fill:rgba(245,230,168,' + f2(0.14 + 0.72 * fg) + ')"' : "";
+        [[-1, -HZ], [1, HZ]].forEach(function (f) {
+          var vis = f[0] * c < 0;
+          for (var k = 0; k < NX; k++) {
+            var xa = -HX + BAY * k + 3, xb = xa + BAY - 6, gh = 20 * seg(cl, 0.4, 0.8);
+            poly([[xa, yb, f[1]], [xb, yb, f[1]], [xb, yb + h, f[1]], [xa, yb + h, f[1]]], 'class="panel' + (vis ? "" : " back") + '"');
+            if (vis) poly([[xa + 7, yb + 8, f[1]], [xb - 7, yb + 8, f[1]], [xb - 7, yb + 8 + gh, f[1]], [xa + 7, yb + 8 + gh, f[1]]],
+              'class="glass"' + gs + ' opacity="' + f1(seg(cl, 0.4 + 0.1 * k, 0.9)) + '"', -0.3);
+          }
+        });
+        [[-1, -HX], [1, HX]].forEach(function (f) {
+          var vis = f[0] * s < 0;
+          for (var k = 0; k < NZ; k++) {
+            var za = -HZ + BAY * k + 3, zb = za + BAY - 6, gh = 20 * seg(cl, 0.4, 0.8);
+            poly([[f[1], yb, za], [f[1], yb, zb], [f[1], yb + h, zb], [f[1], yb + h, za]], 'class="panel' + (vis ? "" : " back") + '"');
+            if (vis) poly([[f[1], yb + 8, za + 7], [f[1], yb + 8, zb - 7], [f[1], yb + 8 + gh, zb - 7], [f[1], yb + 8 + gh, za + 7]],
+              'class="glass"' + gs + ' opacity="' + f1(seg(cl, 0.4 + 0.1 * k, 0.9)) + '"', -0.3);
+          }
+        });
+      }
+    }
+
+    // roof
+    var top = B + FLOORS * FH, pv = seg(p, 0.92, 0.95), mv = seg(p, 0.94, 0.98), av = seg(p, 0.97, 1);
+    if (pv > 0.001) { var ph = 8 * pv; wbox(-126, 126, top, top + ph, -66, -62); wbox(-126, 126, top, top + ph, 62, 66); wbox(-126, -122, top, top + ph, -62, 62); wbox(122, 126, top, top + ph, -62, 62); curTop = Math.max(curTop, top + ph); }
+    if (mv > 0.001) { wbox(-50, 50, top, top + 18 * mv, -22, 22); curTop = Math.max(curTop, top + 18 * mv); }
+    if (av > 0.001) {
+      seg3([0, top + 18, 0], [0, top + 18 + 42 * av, 0], "ant" + (glow > 0.9 ? " hot" : ""), -0.5);
+      curTop = Math.max(curTop, top + 18 + 42 * av);
+      if (p >= 1) { var bp = P(0, top + 62, 0); out.push({ d: bp.d - 1, s: '<circle class="beacon" cx="' + f1(bp.x) + '" cy="' + f1(bp.y) + '" r="2.6"/>' }); }
+    }
+
+    // fine wireframe tower crane until completion
+    if (p < 1) {
+      var mx = 172, mt = 400, jy = 372;
+      seg3([mx, 0, -6], [mx, mt, -6], "crane"); seg3([mx, 0, 6], [mx, mt, 6], "crane");
+      for (var zy = 0; zy < mt; zy += 25) seg3([mx, zy, zy % 50 === 0 ? -6 : 6], [mx, zy + 25, zy % 50 === 0 ? 6 : -6], "crane");
+      seg3([mx, jy, 0], [-120, jy, 0], "crane"); seg3([mx, jy, 0], [215, jy, 0], "crane");
+      seg3([mx, mt + 14, 0], [-120, jy, 0], "crane"); seg3([mx, mt + 14, 0], [215, jy, 0], "crane"); seg3([mx, mt, 0], [mx, mt + 14, 0], "crane");
+      var built = Math.min(FLOORS, Math.ceil(seg(p, 0.05, 0.60) * FLOORS - 0.0001)), hy = B + Math.max(1, built) * FH + 22;
+      seg3([-20, jy, 0], [-20, hy, 0], "hook"); seg3([-26, hy, 0], [-14, hy, 0], "hook");
+    }
+
+    // architectural dimensions (drawn on top): height of built structure and plan width
+    var dx = -152, dz = -78, H = (curTop - B) * M_PER_U;
+    seg3([dx, B, dz], [dx, curTop, dz], "dim", 0, over);
+    for (var t = 0; t * FH + B <= curTop + 0.5; t++) seg3([dx - 4, B + t * FH, dz], [dx + 4, B + t * FH, dz], "dim", 0, over);
+    label(dx - 12, (B + curTop) / 2, dz, "+" + f1(H) + " m", "end");
+    seg3([-HX, 0, -96], [HX, 0, -96], "dim", 0, over);
+    seg3([-HX, -4, -96], [-HX, 4, -96], "dim", 0, over); seg3([HX, -4, -96], [HX, 4, -96], "dim", 0, over);
+    label(0, -12, -96, f1(2 * HX * M_PER_U) + " m");
+
+    out.sort(function (a, b) { return b.d - a.d; });
+    return site + out.map(function (o) { return o.s; }).join("") + over.map(function (o) { return o.s; }).join("");
+  }
+
+  // ----- state, rendering loop -----
+  var shown = 0, anim = null, raf = 0, dragging = false, lastT = 0;
+  var el = function (id) { return document.getElementById(id); };
+  var eDays = el("cc-days"), eCap = el("cc-dcap"), eH = el("cc-h"), eM = el("cc-m"), eS = el("cc-s"), bar = el("cc-bar"), stage = el("cc-stage"), pct = el("cc-pct");
+
+  function setYaw(v) { yaw = v; c = Math.cos(yaw); s = Math.sin(yaw); }
+  function render() {
+    g.innerHTML = build(shown);
+    scene.classList.toggle("lit", shown >= 1 && glow >= 1);
+    halo.style.opacity = shown >= 1 ? (0.25 + 0.75 * glow) : (0.15 + 0.3 * shown);
+    bar.setAttribute("x2", shown * 1000);
+  }
+  function frame(now) {
+    raf = 0;
+    var dt = Math.min(0.05, (now - (lastT || now)) / 1000); lastT = now;
+    var more = false;
+    if (anim) {
+      var k = Math.min(1, (now - anim.t0) / anim.ms), e = 1 - Math.pow(1 - k, 3);
+      shown = anim.from + (anim.to - anim.from) * e;
+      if (k >= 1) { shown = anim.to; anim = null; } else more = true;
+    }
+    if (shown >= 1 && glow < 1) { glow = reduce ? 1 : Math.min(1, glow + dt / 3.4); more = glow < 1; }
+    render();
+    if (more) raf = requestAnimationFrame(frame); else lastT = 0;
+  }
+  function schedule() { if (!raf) raf = requestAnimationFrame(frame); }
+  function go(to, ms) {
+    if (reduce || ms <= 0) { anim = null; shown = to; } else anim = { from: shown, to: to, ms: ms, t0: performance.now() };
+    schedule();
+  }
+
+  // gentle drag / keyboard rotation
+  var px = 0;
+  svg.addEventListener("pointerdown", function (e) { dragging = true; px = e.clientX; svg.setPointerCapture(e.pointerId); });
+  svg.addEventListener("pointermove", function (e) { if (!dragging) return; setYaw(yaw + (e.clientX - px) * 0.01); px = e.clientX; schedule(); });
+  var stop = function () { dragging = false; };
+  svg.addEventListener("pointerup", stop); svg.addEventListener("pointercancel", stop);
+  svg.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { setYaw(yaw - 0.15); schedule(); e.preventDefault(); }
+    if (e.key === "ArrowRight") { setYaw(yaw + 0.15); schedule(); e.preventDefault(); }
+  });
+
+  // ----- countdown readout -----
+  function progress(now) { return clamp((now - START) / (TARGET - START)); }
+  function stageText(p) {
+    var f;
+    if (p < 0.05) return "<b>FOUNDATION</b> BEING LAID";
+    if (p < 0.60) { f = Math.min(FLOORS, Math.floor(seg(p, 0.05, 0.60) * FLOORS) + 1); return "<b>STRUCTURAL FRAME</b> LEVEL " + f + " OF " + FLOORS; }
+    if (p < 0.92) { f = Math.min(FLOORS, Math.floor(seg(p, 0.60, 0.92) * FLOORS) + 1); return "<b>CLADDING AND GLAZING</b> LEVEL " + f + " OF " + FLOORS; }
+    return "<b>ROOF AND FINISHING</b>";
+  }
+  function text(now) {
+    var diff = TARGET - now;
+    if (diff <= 0) { root.classList.add("is-event"); return; }
+    root.classList.remove("is-event");
+    var d = Math.floor(diff / DAY);
+    eDays.textContent = d;
+    eCap.innerHTML = d === 1 ? "DAY<br>TO GO" : "DAYS<br>TO GO";
+    eH.textContent = pad(Math.floor((diff % DAY) / 3600000));
+    eM.textContent = pad(Math.floor((diff % 3600000) / 60000));
+    eS.textContent = pad(Math.floor((diff % 60000) / 1000));
+    var p = progress(now);
+    pct.innerHTML = "<b>" + Math.round(p * 100) + "%</b> CONSTRUCTED";
+    stage.innerHTML = stageText(p);
+  }
+
+  // First paint: show what the visitor saw last time (if anything), then build up to the real stage.
+  var p0 = progress(NOW()), seen = null;
+  if (!OFFSET) { try { var raw = localStorage.getItem(KEY); if (raw !== null) seen = parseFloat(raw); } catch (e) {} }
+  shown = (seen !== null && !isNaN(seen) && !reduce) ? Math.min(seen, p0) : p0;
+  text(NOW()); render();
+  if (shown !== p0) setTimeout(function () { go(p0, 3200); }, 400);
+  else if (p0 >= 1) schedule();
+  save(p0);
+
+  var last = p0;
+  setInterval(function () {
+    var now = NOW(); text(now);
+    var p = progress(now);
+    if (Math.abs(p - last) > 0.0004) { go(p, 1800); last = p; }
+    save(p);
+  }, 1000);
+})();
+</script>
+
   <script>
     // Google Apps Script Web App URL (unchanged)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzL0pnFHZNUR5ATOhFIMCHKf1pmDv0ehq7YeVb8RJW3QkBCrmXXe0WTaS316_yQtd0oFQ/exec";
-
-    const eventDate = new Date("Nov 7, 2026 18:00:00").getTime();
-    const siteOpened = new Date("Oct 1, 2026 00:00:00").getTime(); // start of the progress bar
-
-    const pad = n => (n < 10 ? '0' + n : String(n));
-
-    function updateCountdown() {
-      const now = Date.now();
-      const diff = Math.max(eventDate - now, 0);
-
-      document.getElementById("days").innerText = pad(Math.floor(diff / 86400000));
-      document.getElementById("hours").innerText = pad(Math.floor((diff % 86400000) / 3600000));
-      document.getElementById("mins").innerText = pad(Math.floor((diff % 3600000) / 60000));
-      document.getElementById("secs").innerText = pad(Math.floor((diff % 60000) / 1000));
-
-      const pct = Math.min(100, Math.max(0, ((now - siteOpened) / (eventDate - siteOpened)) * 100));
-      document.getElementById("progressBar").style.width = pct.toFixed(1) + "%";
-      document.getElementById("progressPct").innerText = Math.round(pct) + "%";
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
 
     const fileText = document.getElementById('fileText');
     const dropLabel = document.getElementById('fileDropLabel');

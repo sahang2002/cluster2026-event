@@ -559,32 +559,45 @@
   <div class="hazard" aria-hidden="true"></div>
 
   <!-- Site access pass -->
-  <div id="successModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="passTitle">
-    <div class="pass" id="modalCard">
-      <div class="pass-top">
-        <div class="slot" aria-hidden="true"></div>
-        <small>NDT Civil Community</small>
-        <h3 id="passTitle">Cluster 2026<br>Entry pass</h3>
-      </div>
-      <div class="pass-body">
-        <div class="ok-line">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
-          Registration complete
-        </div>
-        <br>
-        <div class="qr"><img id="qrImage" src="" alt="Entry pass QR code"></div>
-        <span id="mTicketId">TICKET ID: CLR-000000</span>
-        <div class="rows">
-          <div><span>Pass holder</span><span id="mName"></span></div>
-          <div><span>Reg no</span><span id="mReg"></span></div>
-          <div><span>Date</span><span>7th Nov 2026</span></div>
-          <div><span>Status</span><span class="st">Confirmed</span></div>
-        </div>
-      </div>
-      <p class="pass-note">Show this QR code at the gate. A copy was emailed to you.</p>
-      <button class="btn" onclick="closeModal()">Done</button>
+ <!-- Registration Pending Modal -->
+<div id="successModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+  <div class="bg-[#121215] border border-[#D4AF37] rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative">
+    
+    <!-- Pending Hourglass Icon -->
+    <div class="w-16 h-16 bg-[#FFD100]/10 border border-[#FFD100] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+      ⏳
     </div>
+
+    <h2 class="text-2xl font-bold text-white mb-1">Registration Submitted!</h2>
+    <p class="text-xs text-yellow-400 font-semibold tracking-wider uppercase mb-4">Payment Verification Pending</p>
+
+    <!-- Info Box -->
+    <div class="bg-[#16161A] border border-gray-800 rounded-xl p-4 text-left mb-5 space-y-2 text-sm">
+      <div class="flex justify-between border-b border-gray-800 pb-2">
+        <span class="text-gray-400">Reference ID:</span>
+        <span id="modalTicketId" class="font-mono font-bold text-[#FFD100]">CLR-XXXXXX</span>
+      </div>
+      <div class="flex justify-between border-b border-gray-800 pb-2">
+        <span class="text-gray-400">Pass Holder:</span>
+        <span id="modalName" class="font-semibold text-white">---</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-400">Status:</span>
+        <span class="font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded text-xs">PENDING</span>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <p class="text-xs text-gray-400 leading-relaxed mb-6">
+      We have received your bank slip. Our team will verify the payment and email your <b>Official PDF Ticket with QR Code</b> once approved.
+    </p>
+
+    <!-- Action Button -->
+    <button onclick="closeModal()" class="w-full bg-[#FFD100] hover:bg-yellow-400 text-black font-bold py-3 rounded-xl transition duration-200">
+      Got it, thanks!
+    </button>
   </div>
+</div>
 
   <!-- Error toast -->
   <div id="errorToast" class="toast" role="alert" aria-live="assertive">
@@ -913,7 +926,8 @@
           const res = await response.json();
 
           if (res.result === "success") {
-            showSuccessModal(payload.fullName, payload.regNo, res.ticketId, res.qrUrl);
+            // QR Code වෙනුවට Verification Pending Modal එක පෙන්වීම
+            showSuccessModal(payload.fullName, payload.regNo, res.ticketId);
           } else {
             showErrorToast(res.error || "Registration failed. Check your details and try again.");
           }
@@ -926,11 +940,11 @@
       reader.readAsDataURL(fileInput);
     }
 
-    function showSuccessModal(name, regNo, ticketId, qrUrl) {
-      document.getElementById('mName').innerText = name;
-      document.getElementById('mReg').innerText = regNo;
-      document.getElementById('mTicketId').innerText = "TICKET ID: " + ticketId;
-      document.getElementById('qrImage').src = qrUrl;
+    // Modal එකේ Text වෙනස් කර QR Code Image Reference එක ඉවත් කර ඇත
+    function showSuccessModal(name, regNo, ticketId) {
+      if(document.getElementById('mName')) document.getElementById('mName').innerText = name;
+      if(document.getElementById('mReg')) document.getElementById('mReg').innerText = regNo;
+      if(document.getElementById('mTicketId')) document.getElementById('mTicketId').innerText = "REF ID: " + ticketId;
 
       document.getElementById('successModal').classList.add('open');
       setTimeout(() => document.getElementById('modalCard').classList.add('show'), 10);

@@ -148,6 +148,35 @@
     .pass .btn { border-radius: 0; box-shadow: none; font-size: 22px; }
     .pass .btn:active { transform: none; }
 
+    /* ---------- ID type toggle ---------- */
+    .idtoggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .idtoggle label { position: relative; cursor: pointer; }
+    .idtoggle span { display: block; text-align: center; padding: 10px 8px; font-size: 14px; font-weight: 700; color: var(--muted); background: var(--panel2); border: 2px solid var(--line); border-radius: 6px; transition: border-color .15s, background-color .15s, color .15s; }
+    .idtoggle label:hover span { border-color: #55555e; }
+    .idtoggle input:checked + span { color: var(--gold); border-color: var(--gold); background: rgba(255,209,0,.12); }
+    .idtoggle input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+    /* ---------- Payment details (compact) ---------- */
+    .pay { border: 1px solid var(--gold2); border-radius: 8px; background: var(--panel2); padding: 8px 12px 10px; }
+    .pay-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding-bottom: 4px; }
+    .pay-h b { font-size: 13px; color: var(--gold); }
+    .pay-h span { font-family: var(--font-display); font-size: 20px; font-weight: 800; line-height: 1; color: #fff; }
+    .pay-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; min-height: 40px; border-top: 1px solid var(--line); }
+    .pay-k { flex: none; width: 92px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .pay-v { flex: 1; min-width: 0; font-size: 13px; font-weight: 700; color: #fff; word-break: break-word; }
+    .pay-v.mono { font-family: 'Courier New', monospace; font-size: 14px; letter-spacing: .05em; color: var(--gold); }
+    .copy { flex: none; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--gold); background: transparent; border: 1px solid var(--gold2); border-radius: 6px; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s; }
+    .copy:hover { background: rgba(255,209,0,.12); border-color: var(--gold); }
+    .copy:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .copy .i-ok { display: none; }
+    .copy.done { color: var(--black); background: var(--ok); border-color: var(--ok); }
+    .copy.done .i-ok { display: block; }
+    .copy.done .i-copy { display: none; }
+    .pay-note { margin-top: 8px; padding: 7px 10px; border-left: 3px solid var(--gold); border-radius: 4px; background: rgba(255,209,0,.08); font-size: 12px; line-height: 1.4; color: var(--text); }
+    .pay-note b { color: var(--gold); word-break: break-word; }
+    @media (max-width: 400px) { .pay-k { width: 76px; } }
+
     /* ---------- Error toast ---------- */
     .toast { position: fixed; left: 50%; bottom: 20px; z-index: 60; width: calc(100% - 32px); max-width: 420px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; display: flex; gap: 12px; align-items: flex-start; background: var(--panel2); border: 1px solid var(--line); border-left: 8px solid var(--err); border-radius: 6px; padding: 12px 14px; box-shadow: 0 14px 30px rgba(0,0,0,.6); transition: transform .25s ease, opacity .25s ease; }
     .toast.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
@@ -510,7 +539,7 @@
     <!-- RIGHT: registration form -->
     <main class="sheet">
       <h2>Reserve your place</h2>
-      <p class="lede">Fill in your details and attach the bank slip. Once we verify your payment, your official ticket with QR code is emailed to you.</p>
+      <p class="lede">Fill in your details, pay to the account below and attach the bank slip. Once we verify your payment, your official ticket with QR code is emailed to you.</p>
 
       <form id="regForm" onsubmit="handleRegistration(event)" novalidate>
         <div class="field">
@@ -519,8 +548,13 @@
         </div>
 
         <div class="field">
-          <label class="lbl" for="regNo">Student registration number</label>
-          <input type="text" id="regNo" required autocomplete="off" placeholder="e.g. 23CI0125">
+          <span class="lbl" id="idHead">Registration number or NIC <em>Choose one</em></span>
+          <div class="idtoggle" role="radiogroup" aria-labelledby="idHead">
+            <label><input type="radio" name="idType" value="REG" class="sr" checked><span>Registration no.</span></label>
+            <label><input type="radio" name="idType" value="NIC" class="sr"><span>NIC number</span></label>
+          </div>
+          <input type="text" id="regNo" required autocomplete="off" autocapitalize="characters" aria-labelledby="idHead" aria-describedby="idHint" placeholder="e.g. 23CI0125">
+          <p class="hint" id="idHint">Use your university student registration number.</p>
         </div>
 
         <div class="field">
@@ -531,6 +565,16 @@
         <div class="field">
           <label class="lbl" for="phone">WhatsApp number</label>
           <input type="tel" id="phone" required autocomplete="tel" placeholder="e.g. 0771234567">
+        </div>
+
+        <!-- ===== PAYMENT DETAILS: EDIT the 4 values below (visible text AND data-copy) ===== -->
+        <div class="pay" aria-label="Payment details">
+          <div class="pay-h"><b>Pay the entry fee to this account</b><span>LKR 5,000</span></div>
+          <div class="pay-row"><span class="pay-k">Bank</span><span class="pay-v">YOUR BANK NAME</span><button type="button" class="copy" data-copy="YOUR BANK NAME" aria-label="Copy bank name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Account name</span><span class="pay-v">ACCOUNT HOLDER NAME</span><button type="button" class="copy" data-copy="ACCOUNT HOLDER NAME" aria-label="Copy account name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Account no.</span><span class="pay-v mono">0000000000</span><button type="button" class="copy" data-copy="0000000000" aria-label="Copy account number" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Branch</span><span class="pay-v">BRANCH NAME</span><button type="button" class="copy" data-copy="BRANCH NAME" aria-label="Copy branch name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <p class="pay-note"><b>Remark:</b> write <b id="remarkVal">your registration number or NIC number</b> in the bank transfer remark / reference.</p>
         </div>
 
         <div class="field">
@@ -884,7 +928,11 @@
     // Returns an error message, or '' when everything is valid
     function validateForm(d, file) {
       if (d.fullName.length < 3) return "Enter your full name.";
-      if (!/^[A-Za-z0-9\-\/]{4,20}$/.test(d.regNo)) return "Enter a valid student registration number, for example 23CI0125.";
+      if (d.idType === 'NIC') {
+        if (!/^(\d{9}[VX]|\d{12})$/.test(d.regNo)) return "Enter a valid NIC number: 9 digits followed by V or X (for example 951234567V), or the 12 digit new NIC.";
+      } else if (!/^[A-Za-z0-9\-\/]{4,20}$/.test(d.regNo)) {
+        return "Enter a valid student registration number, for example 23CI0125.";
+      }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) return "Enter a valid email address. Your ticket is sent there.";
       if (!/^\+?\d{9,15}$/.test(d.phone.replace(/[\s\-()]/g, ''))) return "Enter a valid WhatsApp number, for example 0771234567.";
       if (!file) return "Attach your bank slip before registering.";
@@ -914,7 +962,8 @@
       const file = slipInput.files[0];
       const data = {
         fullName: document.getElementById('fullName').value.trim(),
-        regNo: document.getElementById('regNo').value.trim(),
+        idType: getIdType(),
+        regNo: document.getElementById('regNo').value.replace(/\s+/g, '').toUpperCase(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim()
       };
@@ -972,6 +1021,7 @@
 
     function resetFormUI() {
       document.getElementById('regForm').reset();
+      setIdType('REG');
       fileText.innerText = DEFAULT_FILE_TEXT;
       dropLabel.classList.remove('has-file');
     }
@@ -1014,6 +1064,63 @@
     function hideErrorToast() {
       document.getElementById('errorToast').classList.remove('show');
     }
+
+    // ===== Registration number / NIC toggle =====
+    const ID_CFG = {
+      REG: { ph: 'e.g. 23CI0125', hint: 'Use your university student registration number.', fallback: 'your registration number' },
+      NIC: { ph: 'e.g. 951234567V or 200212345678', hint: 'For older batches without a registration number. Old NIC: 9 digits + V. New NIC: 12 digits.', fallback: 'your NIC number' }
+    };
+    function getIdType() {
+      const r = document.querySelector('input[name="idType"]:checked');
+      return r ? r.value : 'REG';
+    }
+    function updateRemark() {
+      const v = document.getElementById('regNo').value.replace(/\s+/g, '').toUpperCase();
+      document.getElementById('remarkVal').textContent = v || ID_CFG[getIdType()].fallback;
+    }
+    function setIdType(type) {
+      const r = document.querySelector('input[name="idType"][value="' + type + '"]');
+      if (r) r.checked = true;
+      const cfg = ID_CFG[type] || ID_CFG.REG;
+      document.getElementById('regNo').placeholder = cfg.ph;
+      document.getElementById('idHint').textContent = cfg.hint;
+      updateRemark();
+    }
+    document.querySelectorAll('input[name="idType"]').forEach(r => r.addEventListener('change', () => {
+      document.getElementById('regNo').value = '';
+      setIdType(r.value);
+    }));
+    document.getElementById('regNo').addEventListener('input', updateRemark);
+    setIdType('REG');
+
+    // ===== Copy buttons for the account details =====
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
+      } catch (e) { /* fall through to the old method */ }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0, text.length);
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch (e) { return false; }
+    }
+    document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', async () => {
+      const ok = await copyText(btn.dataset.copy);
+      if (ok) {
+        btn.classList.add('done');
+        setTimeout(() => btn.classList.remove('done'), 1800);
+      } else {
+        // clipboard blocked: highlight the text so it can be copied by hand
+        const v = btn.closest('.pay-row').querySelector('.pay-v');
+        const sel = window.getSelection();
+        if (sel && v) sel.selectAllChildren(v);
+      }
+    }));
   </script>
 </body>
 </html>

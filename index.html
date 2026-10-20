@@ -4,7 +4,7 @@
   <!-- Society Logo Favicon -->
   <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1UvR4bDe4RdnEb49cvVtBE3DHg0k4nb5Y">
 
-  <!-- Apple Devices සඳහාද Logo එක පැහැදිලිව පෙනීමට (Optional) -->
+  <!-- Apple Devices Logo (Optional) -->
   <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1UvR4bDe4RdnEb49cvVtBE3DHg0k4nb5Y">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -447,7 +447,7 @@
       <img src="https://lh3.googleusercontent.com/d/1UvR4bDe4RdnEb49cvVtBE3DHg0k4nb5Y" alt="NDT Civil Community logo">
       <div>
         <b>NDT Civil Community</b>
-        <span>Department of Civil Engineering</span>
+        <span></span>
       </div>
     </div>
     <div class="sheet-ref">Registration<br>Annual get-together</div>
@@ -553,13 +553,19 @@
         </div>
 
         <div class="field">
-          <span class="lbl" id="idHead">Registration number or NIC <em>Choose one</em></span>
+          <span class="lbl" id="idHead">Registration number or Batch <em>Choose one</em></span>
           <div class="idtoggle" role="radiogroup" aria-labelledby="idHead">
             <label><input type="radio" name="idType" value="REG" class="sr" checked><span>Registration no.</span></label>
-            <label><input type="radio" name="idType" value="NIC" class="sr"><span>NIC number</span></label>
+            <label><input type="radio" name="idType" value="BATCH" class="sr"><span>Batch</span></label>
           </div>
           <input type="text" id="regNo" required autocomplete="off" autocapitalize="characters" aria-labelledby="idHead" aria-describedby="idHint" placeholder="e.g. 23CI0125">
           <p class="hint" id="idHint">Use your university student registration number.</p>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="nic">NIC number</label>
+          <input type="text" id="nic" required autocomplete="off" autocapitalize="characters" aria-describedby="nicHint" placeholder="e.g. 951234567V or 200212345678">
+          <p class="hint" id="nicHint">Old NIC: 9 digits + V. New NIC: 12 digits.</p>
         </div>
 
         <div class="field">
@@ -574,48 +580,13 @@
 
         <!-- ===== PAYMENT DETAILS: EDIT the 4 values below (visible text AND data-copy) ===== -->
         <div class="pay" aria-label="Payment details">
-  <div class="pay-h"><b>Pay the entry fee to this account</b><span>LKR 5,000</span></div>
-  
-  <div class="pay-row">
-    <span class="pay-k">Bank</span>
-    <span class="pay-v">BOC - Bank of Ceylon</span>
-    <button type="button" class="copy" data-copy="BOC - Bank of Ceylon" aria-label="Copy bank name" title="Copy">
-      <svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
-      <svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-    </button>
-  </div>
-
-  <div class="pay-row">
-    <span class="pay-k">Account name</span>
-    <span class="pay-v">G.M.SAHAN JAYANINDU</span>
-    <button type="button" class="copy" data-copy="G.M.SAHAN JAYANINDU" aria-label="Copy account name" title="Copy">
-      <svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
-      <svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-    </button>
-  </div>
-
-  <div class="pay-row">
-    <span class="pay-k">Account no.</span>
-    <span class="pay-v mono">3431087</span>
-    <button type="button" class="copy" data-copy="3431087" aria-label="Copy account number" title="Copy">
-      <svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
-      <svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-    </button>
-  </div>
-
-  <div class="pay-row">
-    <span class="pay-k">Branch</span>
-    <span class="pay-v">BELIATTA</span>
-    <button type="button" class="copy" data-copy="BELIATTA" aria-label="Copy branch name" title="Copy">
-      <svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
-      <svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-    </button>
-  </div>
-
- <p class="pay-note">
-  <b>Remark:</b> write <b id="remarkVal" style="color: #FFD100;">your Registration number or NIC number (whichever you entered above)</b> in the bank transfer remark / reference.
-</p>
-</div>
+          <div class="pay-h"><b>Pay the entry fee to this account</b><span>LKR 5,000</span></div>
+          <div class="pay-row"><span class="pay-k">Bank</span><span class="pay-v">BOC - Bank of Ceylon</span><button type="button" class="copy" data-copy="BOC - Bank of Ceylon" aria-label="Copy bank name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Account name</span><span class="pay-v">G.M.SAHAN JAYANINDU</span><button type="button" class="copy" data-copy="G.M.SAHAN JAYANINDU" aria-label="Copy account name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Account no.</span><span class="pay-v mono">3431087</span><button type="button" class="copy" data-copy="3431087" aria-label="Copy account number" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <div class="pay-row"><span class="pay-k">Branch</span><span class="pay-v">BELIATTA</span><button type="button" class="copy" data-copy="BELIATTA" aria-label="Copy branch name" title="Copy"><svg class="i-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg><svg class="i-ok" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></button></div>
+          <p class="pay-note"><b>Remark:</b> write <b id="remarkVal">your NIC number</b> in the bank transfer remark / reference.</p>
+        </div>
 
         <div class="field">
           <span class="lbl" id="slipLabel">Bank slip of LKR 5,000</span>
@@ -947,7 +918,7 @@
 
     function resetSubmitButton() {
       const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Register and get my pass';
+      btn.textContent = 'Submit Registration';
       btn.disabled = false;
       isSubmitting = false;
     }
@@ -968,11 +939,12 @@
     // Returns an error message, or '' when everything is valid
     function validateForm(d, file) {
       if (d.fullName.length < 3) return "Enter your full name.";
-      if (d.idType === 'NIC') {
-        if (!/^(\d{9}[VX]|\d{12})$/.test(d.regNo)) return "Enter a valid NIC number: 9 digits followed by V or X (for example 951234567V), or the 12 digit new NIC.";
+      if (d.idType === 'BATCH') {
+        if (!/^[A-Z0-9][A-Z0-9 \-\/]{1,19}$/.test(d.regNo)) return "Enter your batch, for example 21 or Batch 21.";
       } else if (!/^[A-Za-z0-9\-\/]{4,20}$/.test(d.regNo)) {
         return "Enter a valid student registration number, for example 23CI0125.";
       }
+      if (!/^(\d{9}[VX]|\d{12})$/.test(d.nic)) return "Enter a valid NIC number: 9 digits followed by V or X (for example 951234567V), or the 12 digit new NIC.";
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) return "Enter a valid email address. Your ticket is sent there.";
       if (!/^\+?\d{9,15}$/.test(d.phone.replace(/[\s\-()]/g, ''))) return "Enter a valid WhatsApp number, for example 0771234567.";
       if (!file) return "Attach your bank slip before registering.";
@@ -1003,7 +975,8 @@
       const data = {
         fullName: document.getElementById('fullName').value.trim(),
         idType: getIdType(),
-        regNo: document.getElementById('regNo').value.replace(/\s+/g, '').toUpperCase(),
+        regNo: normalizeId(getIdType(), document.getElementById('regNo').value),
+        nic: document.getElementById('nic').value.replace(/\s+/g, '').toUpperCase(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim()
       };
@@ -1105,18 +1078,23 @@
       document.getElementById('errorToast').classList.remove('show');
     }
 
-    // ===== Registration number / NIC toggle =====
+    // ===== Registration number / Batch toggle =====
     const ID_CFG = {
-      REG: { ph: 'e.g. 23CI0125', hint: 'Use your university student registration number.', fallback: 'your registration number' },
-      NIC: { ph: 'e.g. 951234567V or 200212345678', hint: 'For older batches without a registration number. Old NIC: 9 digits + V. New NIC: 12 digits.', fallback: 'your NIC number' }
+      REG:   { ph: 'e.g. 23CI0125',        hint: 'Use your university student registration number.' },
+      BATCH: { ph: 'e.g. 21 or Batch 21',  hint: 'For older students without a registration number, enter your batch.' }
     };
+    function normalizeId(type, v) {
+      v = String(v || '').trim().toUpperCase();
+      return type === 'BATCH' ? v.replace(/\s+/g, ' ') : v.replace(/\s+/g, '');
+    }
     function getIdType() {
       const r = document.querySelector('input[name="idType"]:checked');
       return r ? r.value : 'REG';
     }
+    // The bank remark is the student's NIC number (everyone has one)
     function updateRemark() {
-      const v = document.getElementById('regNo').value.replace(/\s+/g, '').toUpperCase();
-      document.getElementById('remarkVal').textContent = v || ID_CFG[getIdType()].fallback;
+      const v = document.getElementById('nic').value.replace(/\s+/g, '').toUpperCase();
+      document.getElementById('remarkVal').textContent = v || 'your NIC number';
     }
     function setIdType(type) {
       const r = document.querySelector('input[name="idType"][value="' + type + '"]');
@@ -1130,7 +1108,7 @@
       document.getElementById('regNo').value = '';
       setIdType(r.value);
     }));
-    document.getElementById('regNo').addEventListener('input', updateRemark);
+    document.getElementById('nic').addEventListener('input', updateRemark);
     setIdType('REG');
 
     // ===== Copy buttons for the account details =====

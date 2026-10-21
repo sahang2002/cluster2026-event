@@ -940,7 +940,7 @@
     function validateForm(d, file) {
       if (d.fullName.length < 3) return "Enter your full name.";
       if (d.idType === 'BATCH') {
-        if (!/^[A-Z0-9][A-Z0-9 \-\/]{1,19}$/.test(d.regNo)) return "Enter your batch, for example 21 or Batch 21.";
+        if (!/^[A-Z0-9][A-Z0-9 \-\/]{1,19}$/.test(d.regNo)) return "Enter your batch, for example 84 or Batch 83.";
       } else if (!/^[A-Za-z0-9\-\/]{4,20}$/.test(d.regNo)) {
         return "Enter a valid student registration number, for example 23CI0125.";
       }
